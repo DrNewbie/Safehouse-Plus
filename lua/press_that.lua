@@ -25,7 +25,7 @@ if RequiredScript == "lib/units/beings/player/states/playerstandard" then
 						if _name == "@IDc46fb257fd602df6@" or _name == "@ID5a95fe805e753436@" then
 							local _is_new_button = _pos == "Vector3(71, 4399, -283.52)" and false or true
 							if _is_new_button then
-								local _u = safe_spawn_unit(_unit:name(), _unit:position(), _unit:rotation()) or nil
+								local _u = safe_spawn_unit(Idstring("units/payday2/props/str_prop_com_generic_button/str_prop_com_generic_button"), _unit:position(), _unit:rotation()) or nil
 								if not _u then
 									return 
 								end
@@ -224,10 +224,10 @@ function SafeHousePlus:DoInit()
 				if not _new_button_pos[i] or not _new_button_rot[i] then
 					break
 				end
-				_u = safe_spawn_unit(Idstring("units/payday2/props/str_prop_com_security_keypad/str_prop_com_security_keypad"), _new_button_pos[i], _new_button_rot[i]) or nil
+				_u = safe_spawn_unit(Idstring("units/payday2/props/str_prop_com_generic_button/str_prop_com_generic_button"), _new_button_pos[i], _new_button_rot[i]) or nil
 				if _u then
 					_u:interaction():set_tweak_data("button_infopad")
-					_u:interaction():set_active(true)
+					_u:interaction():set_active(true, false)
 				end
 			end
 			no_invisible_walls()

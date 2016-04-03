@@ -1,5 +1,9 @@
 _G.SafeHousePlus = _G.SafeHousePlus or {}
 
+if SafeHousePlus.settings.unit_tool == 0 then
+	return
+end
+
 SafeHousePlus.Unit_Tool_Modify_History = {}
 SafeHousePlus.Unit_Tool_Spawner_setting = {}
 SafeHousePlus.Unit_Tool_Remover_Last_Did_Name = nil
@@ -13,12 +17,11 @@ SafeHousePlus.Unit_Tool_World_find_units_quick = {}
 SafeHousePlus.Unit_Tool_Spawn_Remove_List = {}
 SafeHousePlus.Unit_Tool_Key_Init_List = {}
 SafeHousePlus.Unit_Tool_Patch_Key_Init_List = {}
+
 if not SafeHousePlus.UnitToolSpawnerList then
 	SafeHousePlus.UnitToolSpawnerList = {}
 	local _select_path_list = {}
-	for dir in io.popen([[dir "mods/SafeHouse+/UnitToolSpawnerList/" /b]]):lines() do
-		_select_path_list[#_select_path_list+1] = dir
-	end
+	_select_path_list[#_select_path_list+1] = "safehouse_default.txt"
 	SafeHousePlus.UnitToolSpawnerList = _select_path_list
 	_select_path_list = {}
 end

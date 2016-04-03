@@ -2,7 +2,7 @@
 	"name" : "SafeHouse Plus",
 	"author" : "Dr_Newbie",
 	"contact" : "Allow you open other difficulty safehouse, give you real target shooting and do some customization.",
-	"version" : "beta.7.3",
+	"version" : "beta.7.4",
 	"priority" : 10,
 	"hooks" : [
 		{
