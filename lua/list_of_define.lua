@@ -255,5 +255,13 @@ function SafeHousePlus:AllHumanUnits()
 			"units/pd2_dlc_vip/characters/ene_phalanx_1/ene_phalanx_1",
 			"units/pd2_dlc_vip/characters/ene_vip_1/ene_vip_1"
 		},
+		
+		all_vehicle = {
+			"units/pd2_dlc_jolly/vehicles/fps_vehicle_box_truck_1/fps_vehicle_box_truck_1",
+			"units/pd2_dlc_jerry/vehicles/fps_vehicle_boat_rib_1/fps_vehicle_boat_rib_1",
+			"units/pd2_dlc_cage/vehicles/fps_vehicle_falcogini_1/fps_vehicle_falcogini_1",
+			"units/pd2_dlc_shoutout_raid/vehicles/fps_vehicle_forklift_1/fps_vehicle_forklift_1",
+			"units/pd2_dlc_shoutout_raid/vehicles/fps_vehicle_muscle_1/fps_vehicle_muscle_1"
+		},
 	}
 end

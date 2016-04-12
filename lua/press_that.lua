@@ -113,23 +113,31 @@ function SafeHousePlus:spawnsomething(_pos)
 	local pos = Vector3(-3923, 1113, 1)
 	if _pos then pos = _pos end
 	local _spawn = SafeHousePlus.EnemyType or "units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"
+	local _is_vehicle = _spawn:find("vehicles") and true or false
 	if alive(_unit) then
 		_unit:set_slot(0)
+	end	
+	if _is_vehicle then
+		pos = Vector3(-3923, 1713, 1)
 	end	
 	_unit = safe_spawn_unit(Idstring(_spawn), pos, Vector3(0, 0, -0)) or nil
 	if not _unit then
 		return 
 	end
 	managers.mission:Set_SafeHouse_Training_EnemyUnit(_unit)
-	local _access = _unit:base():char_tweak().access
-	if _access == "civ_male" or _access == "civ_female" then
-		_unit:movement():set_stance("hos", nil, true)
-		_unit:interaction():set_tweak_data("hostage_move")
-	else
-		set_team(_unit, _unit:base():char_tweak().access == "gangster" and "gangster" or "combatant")
-		if SafeHousePlus.settings.no_attack == 1 then
-			_unit:brain():set_active(false)
+	if not _is_vehicle then
+		local _access = _unit:base():char_tweak().access
+		if _access == "civ_male" or _access == "civ_female" then
+			_unit:movement():set_stance("hos", nil, true)
+			_unit:interaction():set_tweak_data("hostage_move")
+		else
+			set_team(_unit, _unit:base():char_tweak().access == "gangster" and "gangster" or "combatant")
+			if SafeHousePlus.settings.no_attack == 1 then
+				_unit:brain():set_active(false)
+			end
 		end
+	else
+		log("V")
 	end
 end
 
