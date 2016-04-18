@@ -136,8 +136,6 @@ function SafeHousePlus:spawnsomething(_pos)
 				_unit:brain():set_active(false)
 			end
 		end
-	else
-		log("V")
 	end
 end
 
