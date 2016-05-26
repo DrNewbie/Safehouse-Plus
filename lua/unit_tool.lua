@@ -15,8 +15,6 @@ SafeHousePlus.Unit_Tool_Rotation = false
 SafeHousePlus.Unit_Tool_Rotation_Type = 0
 SafeHousePlus.Unit_Tool_World_find_units_quick = {}
 SafeHousePlus.Unit_Tool_Spawn_Remove_List = {}
-SafeHousePlus.Unit_Tool_Key_Init_List = {}
-SafeHousePlus.Unit_Tool_Patch_Key_Init_List = {}
 
 if not SafeHousePlus.UnitToolSpawnerList then
 	SafeHousePlus.UnitToolSpawnerList = {}
@@ -25,6 +23,23 @@ if not SafeHousePlus.UnitToolSpawnerList then
 	SafeHousePlus.UnitToolSpawnerList = _select_path_list
 	_select_path_list = {}
 end
+
+function idstring_lookup()
+	local result = {}
+	if( DB:has( "idstring_lookup", "idstring_lookup" ) ) then
+		local file = DB:open( "idstring_lookup", "idstring_lookup" )
+		local data = file:read()   
+		for _,text in pairs( string.split( data, '%z' ) ) do
+			local key = text:id():key()
+			key = key:lower()
+			result[key] = text
+		end
+		file:close()
+	end 
+	return result
+end
+
+SafeHousePlus.Unit_Tool_Key_Init_List = idstring_lookup()
 
 function MenuManager:select_Unit_Tool_main(params)
 	local opts = {}
@@ -53,9 +68,7 @@ function MenuManager:select_Unit_Tool_save()
 	local _history = SafeHousePlus.Unit_Tool_Modify_History or {}
 	local file = io.open("mods/SafeHouse-Plus/UnitToolSave/save.txt", "w")
 	if file and _history then
-		for _, data in pairs(_history) do
-			file:write("" .. tostring(data), "\n")
-		end
+		file:write(json.encode(_history))
 		file:close()
 		managers.hud:show_hint({ text = "Unit Tool - Saved" })
 	end
@@ -70,20 +83,12 @@ function MenuManager:select_Unit_Tool_load()
 	local _txt_list = {}
 	local file = io.open("mods/SafeHouse-Plus/UnitToolSave/save.txt", "r")
 	if file then
-		local line = file:read()
-		while line do
-			_txt = tostring(line)
-			_txt_list = mysplit(_txt, "___")
-			local type = _txt_list[1]
-			local key = _txt_list[2]
-			local pos = mysplit(_txt_list[3], ",")
-			local rot = mysplit(_txt_list[4], ",")
-			_list = {type = type, key = key, pos = Vector3(tonumber(pos[1]), tonumber(pos[2]), tonumber(pos[3])), rot = Rotation(tonumber(rot[1]), tonumber(rot[2]), tonumber(rot[3]))}
-			_list_final[#_list_final+1] = _list
-			line = file:read()
-		end
+		_list_final = json.decode(file:read("*all")) or {}
 		file:close()
-	end	
+	end
+	for k, v in pairs(_list_final) do
+		_list_final[k] = {type = v.type, key = v.key, pos = Vector3(v.pos_x, v.pos_y, v.pos_z), rot = Rotation(v.rot_yaw, v.rot_pitch, v.rot_roll)}
+	end
 	SafeHousePlus.Unit_Tool_Spawn_Remove_List = _list_final
 	
 	local _select_path_list = SafeHousePlus.UnitToolSpawnerList or {}
@@ -100,26 +105,7 @@ function MenuManager:select_Unit_Tool_load()
 			end
 			file:close()
 		end
-	end		
-	local _key_init_list = {}
-	local _pos = managers.player:player_unit():position()
-	local _rot = managers.player:player_unit():rotation()
-	for _, name in pairs(_select_name_list) do
-		if name and name ~= "" and name ~= "nil" then
-			local _u = safe_spawn_unit(Idstring(name), _pos, _rot)
-			if _u and tostring(_u:name():key()) ~= "nil" and tostring(name) ~= "nil" then
-				_key_init_list[tostring(_u:name():key())] = tostring(name)
-				_u:set_slot(0)
-			end
-		end
-	end	
-	SafeHousePlus.Unit_Tool_Key_Init_List = _key_init_list
-	
-	local _tmp_patch_key_init_list = {}
-	for _, unit in pairs(World:find_units_quick("all", 1)) do
-		_tmp_patch_key_init_list[tostring(unit:name():key())] = unit:name()
 	end
-	SafeHousePlus.Unit_Tool_Patch_Key_Init_List = _tmp_patch_key_init_list
 	
 	DelayedCalls:Add("Delayed2spawn_from_list", 1, function()
 		_spawn_from_list()
@@ -129,12 +115,11 @@ end
 function _spawn_from_list()
 	local _times = 5
 	local _key_init_list = SafeHousePlus.Unit_Tool_Key_Init_List or {}
-	local _tmp_patch_key_init_list = SafeHousePlus.Unit_Tool_Patch_Key_Init_List or {}
 	local _list_final = SafeHousePlus.Unit_Tool_Spawn_Remove_List
 	SafeHousePlus.Unit_Tool_Remove_List_Total = 0
 	for key, data in pairs(_list_final) do
-		if data.type == "spawn" and (_key_init_list[data.key] or _tmp_patch_key_init_list[data.key]) then
-			local _name = _key_init_list[data.key] and Idstring(_key_init_list[data.key]) or _tmp_patch_key_init_list[data.key]
+		if data.type == "spawn" and _key_init_list[data.key] then
+			local _name = Idstring(_key_init_list[data.key])
 			if _name then
 				local _u = safe_spawn_unit(_name, data.pos, data.rot)
 				SafeHousePlus:Unit_Tool_History_record(_u, "spawn")
@@ -185,6 +170,7 @@ function _remove_from_list()
 					_rotB = _rotB:gsub("-0", "0")
 					if keyA == keyB and _posA == _posB and _rotA == _rotB then
 						SafeHousePlus:Unit_Tool_History_record(unit, "remove")
+						managers.network:session():send_to_peers_synched( "remove_unit", unit )
 						unit:set_slot(0)
 						_times = _times - 1
 						SafeHousePlus.Unit_Tool_Remove_List_Total = SafeHousePlus.Unit_Tool_Remove_List_Total - 1
@@ -209,8 +195,6 @@ function _remove_from_list()
 		SafeHousePlus.Unit_Tool_Remove_List_Total = 0
 		SafeHousePlus.Unit_Tool_World_find_units_quick = {}
 		SafeHousePlus.Unit_Tool_Spawn_Remove_List = {}
-		SafeHousePlus.Unit_Tool_Key_Init_List = {}
-		SafeHousePlus.Unit_Tool_Patch_Key_Init_List = {}
 		managers.hud:show_hint( { text = "Complete!!" } )
 	end
 end
@@ -218,9 +202,9 @@ end
 function SafeHousePlus:Unit_Tool_History_record(_unit, _type)
 	if _unit then
 		local _list = SafeHousePlus.Unit_Tool_Modify_History or {}
-		local _pos, _rot = get_xyz_yawpitchroll(_unit)
+		local _pos, _rot = _unit:position(), _unit:rotation()
 		if not SafeHousePlus:UnitTool_IsBlocked(tostring(_unit:name():key())) then
-			SafeHousePlus.Unit_Tool_Modify_History[#_list+1] = "".. _type .."___".. tostring(_unit:name():key()) .."___".. _pos .."___".. _rot
+			SafeHousePlus.Unit_Tool_Modify_History[#_list+1] = {type = _type, key = _unit:name():key(), pos_x = _pos.x, pos_y = _pos.y, pos_z = _pos.z, rot_yaw = _rot:yaw(), rot_pitch = _rot:pitch(), rot_roll = _rot:roll()}
 		end
 		log("[Unit Tool]: {".. tostring(_unit) .."},{".. _type .."}")
 	end
