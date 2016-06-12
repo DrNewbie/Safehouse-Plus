@@ -256,3 +256,75 @@ function MenuManager:select_safehouse_spawan_pdg(params)
 		_unit:set_slot(0)
 	end	
 end
+
+function MenuManager:open_safehouse_menu_carry(params)
+
+	if not SafeHousePlus.Carry_list then
+		SafeHousePlus.Carry_list = {}
+		for k, v in pairs(SafeHousePlus:CarryandProp() or {}) do
+			if not SafeHousePlus.Carry_list[k] then
+				table.insert(SafeHousePlus.Carry_list, {name = v.name, unit_name = v.unit_name})
+			end
+		end
+		for _, name in pairs(CarryTweakData:get_carry_ids() or {}) do
+			if tweak_data.carry[name].unit then
+				if not SafeHousePlus.Carry_list[name] then
+					table.insert(SafeHousePlus.Carry_list, {name = name, unit_name = tweak_data.carry[name].unit})
+				end
+			end
+		end
+	end
+	
+	local id = 0
+	local opts = {}
+	local start = params.start or 0
+	start = start >= 0 and start or 0
+	for k, v in pairs(SafeHousePlus.Carry_list) do
+		id = id + 1
+		if id > start then
+			opts[#opts+1] = { text = "".. v.name .."", callback_func = callback(self, self, "select_safehouse_menu_carry", {key = k, unit_name = v.unit_name}) }
+		end
+		if (#opts) >= 15 then
+			start = id
+			break
+		end
+	end
+	opts[#opts+1] = { text = "[Next]--------------", callback_func = callback(self, self, "open_safehouse_menu_carry", {start = start}) }
+	opts[#opts+1] = { text = "[Back to Main]----", callback_func = callback(self, self, "open_safehouse_menu_carry", {start = 0}) }
+	opts[#opts+1] = { text = "[Cancel]", is_cancel_button = true }
+	local _dialog_data = {
+		title = "!! Warning !!",
+		text = "Some of units will make your game crash.",
+		button_list = opts,
+		id = tostring(math.random(0,0xFFFFFFFF))
+	}
+	if managers.system_menu then
+		managers.system_menu:show(_dialog_data)
+	end
+end
+
+SafeHousePlus.Carry_Unit = nil
+
+function MenuManager:select_safehouse_menu_carry(params)
+	if alive(SafeHousePlus.Carry_Unit) then
+		SafeHousePlus.Carry_Unit:set_slot(0)
+	end
+	if not SafeHousePlus.Heavy_Loaded then
+		local _dialog_data = {
+			title = "[Warning]",
+			text = "Required 'Heavy Loaded', please turn it on and restart the game.",
+			button_list = {{ text = "OK", is_cancel_button = true }},
+			id = tostring(math.random(0,0xFFFFFFFF))
+		}
+		managers.system_menu:show(_dialog_data)	
+	else
+		if params.unit_name and params.unit_name ~= "" then
+			SafeHousePlus.Carry_Unit = World:spawn_unit(Idstring(params.unit_name), Vector3(-2604, 2864, 30), Vector3(0, 0, 0))
+			if SafeHousePlus.Carry_Unit and SafeHousePlus.Carry_Unit:interaction() then
+				SafeHousePlus.Carry_Unit:interaction():set_active(false, false)
+			end
+		else
+			table.remove(SafeHousePlus.Carry_list, params.key)
+		end
+	end
+end

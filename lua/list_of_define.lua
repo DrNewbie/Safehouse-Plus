@@ -9,6 +9,18 @@ function SafeHousePlus:UnitTool_IsBlocked(name)
 	return _list[name] or false
 end
 
+function SafeHousePlus:CarryandProp()
+	return {
+		{name = "gold", unit_name = "units/payday2/props/bnk_prop_vault_loot/bnk_prop_vault_loot_special_gold"},
+		{name = "money", unit_name = "units/payday2/props/bnk_prop_vault_loot/bnk_prop_vault_loot_special_money"},
+		{name = "com_prop_jewelry_box_01", unit_name = "units/payday2/props/com_prop_jewelry_jewels/com_prop_jewelry_box_01"},
+		{name = "com_prop_jewelry_box_02", unit_name = "units/payday2/props/com_prop_jewelry_jewels/com_prop_jewelry_box_02"},
+		{name = "com_prop_jewelry_box_03", unit_name = "units/payday2/props/com_prop_jewelry_jewels/com_prop_jewelry_box_03"},
+		{name = "com_prop_jewelry_box_04", unit_name = "units/payday2/props/com_prop_jewelry_jewels/com_prop_jewelry_box_04"},
+		{name = "gen_prop_bank_atm_standing", unit_name = "units/payday2/props/gen_prop_bank_atm_standing/gen_prop_bank_atm_standing"}
+	}
+end
+
 function SafeHousePlus:AllHumanUnits()
 	return {
 		all_cops = {

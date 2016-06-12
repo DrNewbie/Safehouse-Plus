@@ -49,6 +49,8 @@ if RequiredScript == "lib/units/beings/player/states/playerstandard" then
 								}
 								managers.system_menu:show(_dialog_data)
 								return
+							elseif _pos == "Vector3(-2375, 2838, 135)" then
+								managers.menu:open_safehouse_menu_carry({start = 0})
 							end
 						end
 					end
@@ -224,9 +226,9 @@ function SafeHousePlus:DoInit()
 		if not _is_init or _is_init <= 0 then
 			managers.mission:Set_SafeHouse_Training_Init(1)
 			local _u = nil
-			local _new_button_pos = {Vector3(-3373, 4661, 131), Vector3(-3425, 2473, 114)}
-			local _new_button_rot = {Rotation(90, 0, 90), Rotation(-180, 0, 90)}
-			for i = 1 , 2 do
+			local _new_button_pos = {Vector3(-3373, 4661, 131), Vector3(-3425, 2473, 114), Vector3(-2375, 2838, 135)}
+			local _new_button_rot = {Rotation(90, 0, 90), Rotation(-180, 0, 90), Rotation(-180, 0, 90)}
+			for i = 1 , 3 do
 				if not _new_button_pos[i] or not _new_button_rot[i] then
 					break
 				end
@@ -236,7 +238,7 @@ function SafeHousePlus:DoInit()
 					_u:interaction():set_active(true, false)
 				end
 			end
-			no_invisible_walls()
+			no_invisible_walls()			
 			log("[SafeHousePlus] DoInit")
 		end
 	end
