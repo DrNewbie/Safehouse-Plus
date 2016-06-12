@@ -238,7 +238,7 @@ function SafeHousePlus:DoInit()
 					_u:interaction():set_active(true, false)
 				end
 			end
-			no_invisible_walls()			
+			no_invisible_walls()
 			log("[SafeHousePlus] DoInit")
 		end
 	end
