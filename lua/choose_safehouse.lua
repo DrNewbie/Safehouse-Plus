@@ -74,6 +74,7 @@ function MenuManager:open_safehouse_menu()
 	opts[#opts+1] = { text = "Spawn 'CIVS'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 5}) }
 	opts[#opts+1] = { text = "Spawn 'Russia'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 6}) }
 	opts[#opts+1] = { text = "Spawn 'Vehicle'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 7}) }
+	opts[#opts+1] = { text = "Spawn 'Others'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 8}) }
 	opts[#opts+1] = { text = "Spawn 'PAYDAY GANG'", callback_func = callback(self, self, "select_safehouse_spawan_pdg_menu", {}) }
 	
 	opts[#opts+1] = { text = "Spawn 'Ammo & Health Bag'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 0}) }
@@ -128,7 +129,7 @@ function MenuManager:select_safehouse_adv_menu(params)
 		managers.system_menu:show(_dialog_data)
 		return
 	end
-	if params.item >= 1 and params.item <= 6 and not SafeHousePlus.Heavy_Loaded then
+	if ((params.item >= 1 and params.item <= 6) or (params.item == 8)) and not SafeHousePlus.Heavy_Loaded then
 		local _dialog_data = {
 			title = "[Warning]",
 			text = "Required 'Heavy Loaded', please turn it on and restart the game.",
@@ -147,7 +148,8 @@ function MenuManager:select_safehouse_adv_menu(params)
 	elseif params.item == 4 then _select_list = _all_units.all_gangs or {}
 	elseif params.item == 5 then _select_list = _all_units.all_civs or {}
 	elseif params.item == 6 then _select_list = _all_units.all_russia or {}
-	elseif params.item == 7 then _select_list = _all_units.all_vehicle or {} end
+	elseif params.item == 7 then _select_list = _all_units.all_vehicle or {}
+	elseif params.item == 8 then _select_list = _all_units.all_others or {} end
 	if not _select_list then return end
 	local _txt = {}
 	local opts = {}
@@ -248,7 +250,11 @@ function MenuManager:select_safehouse_spawan_pdg(params)
 		params = {scan = true},
 		objective = objective
 	})
-	unit:brain():set_active(false)
+	if SafeHousePlus.settings.no_attack == 1 then
+		unit:brain():set_active(false)
+	else
+		unit:brain():set_active(true)
+	end
 	SafeHousePlus.AIType = character_name
 	local _unit = managers.mission:Get_SafeHouse_Training_EnemyUnit()
 	managers.mission:Set_SafeHouse_Training_EnemyUnit(nil)

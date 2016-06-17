@@ -28,7 +28,9 @@ function MissionManager:init(...)
 			local _others_package = { "levels/narratives/bain/cage/world/world",
 				"levels/narratives/vlad/shout/world/world",
 				"levels/narratives/vlad/jolly/world/world",
-				"levels/narratives/pbr/jerry/world/world"
+				"levels/narratives/pbr/jerry/world/world",
+				"levels/instances/unique/born/born_truck/world/world",
+				"levels/narratives/elephant/born/world/world"
 			}
 			for _, _package in pairs(_others_package) do
 				if not PackageManager:loaded(_package) then
@@ -76,7 +78,7 @@ function MissionManager:init(...)
 					end
 				end
 			end
-			if true then
+			if false then
 				local _world_name = {
 					"narratives/e_framing_frame/stage_1",
 					"narratives/vlad/peta/stage1",

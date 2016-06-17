@@ -273,7 +273,17 @@ function SafeHousePlus:AllHumanUnits()
 			"units/pd2_dlc_jerry/vehicles/fps_vehicle_boat_rib_1/fps_vehicle_boat_rib_1",
 			"units/pd2_dlc_cage/vehicles/fps_vehicle_falcogini_1/fps_vehicle_falcogini_1",
 			"units/pd2_dlc_shoutout_raid/vehicles/fps_vehicle_forklift_1/fps_vehicle_forklift_1",
-			"units/pd2_dlc_shoutout_raid/vehicles/fps_vehicle_muscle_1/fps_vehicle_muscle_1"
+			"units/pd2_dlc_shoutout_raid/vehicles/fps_vehicle_muscle_1/fps_vehicle_muscle_1",
+			"units/pd2_dlc_born/vehicles/fps_vehicle_bike_1/fps_vehicle_bike_1",
+			"units/pd2_dlc_born/vehicles/fps_vehicle_bike_2/fps_vehicle_bike_2"
 		},
+		
+		all_others = {
+			"units/pd2_dlc_born/characters/ene_gang_biker_boss/ene_gang_biker_boss",
+			"units/pd2_dlc_born/characters/ene_biker_female_1/ene_biker_female_1",
+			"units/pd2_dlc_born/characters/ene_biker_female_2/ene_biker_female_2",
+			"units/pd2_dlc_born/characters/ene_biker_female_3/ene_biker_female_3",
+			"units/pd2_dlc_born/characters/npc_male_mechanic/npc_male_mechanic"
+		}
 	}
 end
