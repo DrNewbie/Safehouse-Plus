@@ -18,6 +18,7 @@ function MissionManager:init(...)
 
 	SafeHousePlus.Vehicle_Loaded = false
 	SafeHousePlus.Heavy_Loaded = false
+	SafeHousePlus.Loot_Loaded = false
 	
 	if SafeHousePlus and SafeHousePlus.settings and 
 		tweak_data and tweak_data.narrative and tweak_data.levels and PackageManager and
@@ -54,58 +55,43 @@ function MissionManager:init(...)
 					end
 				end
 			end
-			local _level_index = tweak_data.levels._level_index or {}
-			for _, v in pairs(_level_index) do
-				if tweak_data.levels[v] then
-					if tweak_data.levels[v].package and
-						v ~= "driving_escapes_industry_day" and v ~= "driving_escapes_city_day" then
-						local _package = tweak_data.levels[v].package
-						if _package then
-							if tostring(type(_package)) == "string" then
-								if not PackageManager:loaded(_package) then
-									log("[SafeHousePlus] Loaded Package: " .. _package)
-									PackageManager:load(_package)
-								end
-							elseif tostring(type(_package)) == "table" then
-								for _, p in pairs(_package) do
-									if not PackageManager:loaded(p) then
-										log("[SafeHousePlus] Loaded Package: " .. p)
-										PackageManager:load(p)
-									end
-								end
-							end
-						end
-					end
-				end
-			end
-			if false then
-				local _world_name = {
-					"narratives/e_framing_frame/stage_1",
-					"narratives/vlad/peta/stage1",
-					"narratives/vlad/jewelry_store",
-					"narratives/vlad/ukrainian_job",
-					"narratives/bain/diamond_store",
-					"narratives/dentist/mus",
-					"narratives/bain/rat",
-					"narratives/bain/shadow_raid",	
-					"narratives/armadillo/arm_for",
-					"narratives/h_firestarter/stage_3",
-					"narratives/vlad/mallcrasher",
-				}
-				for _, v in pairs(_world_name) do
-					v = "levels/".. v .."/world"
-					if not PackageManager:loaded(v) then
-						log("[SafeHousePlus] Loaded Package: " .. v)
-						PackageManager:load(v)
-					end
-					v = v .."/world"
-					if not PackageManager:loaded(v) then
-						log("[SafeHousePlus] Loaded Package: " .. v)
-						PackageManager:load(v)
-					end
+			local _heavy_loaded_patch = {"packages/lvl_mad"}
+			for _, _package in pairs(_heavy_loaded_patch) do
+				if not PackageManager:loaded(_package) then
+					log("[SafeHousePlus] Loaded Package: " .. _package)
+					PackageManager:load(_package)
 				end
 			end
 			SafeHousePlus.Heavy_Loaded = true
+		end
+		if SafeHousePlus.settings.loot_loaded == 1 then
+			log("[SafeHousePlus] Loot Loaded")
+			local _world_name = {
+				"narratives/e_framing_frame/stage_1",
+				"narratives/vlad/peta/stage1",
+				"narratives/vlad/jewelry_store",
+				"narratives/vlad/ukrainian_job",
+				"narratives/bain/diamond_store",
+				"narratives/dentist/mus",
+				"narratives/bain/rat",
+				"narratives/bain/shadow_raid",	
+				"narratives/armadillo/arm_for",
+				"narratives/h_firestarter/stage_3",
+				"narratives/vlad/mallcrasher",
+			}
+			for _, v in pairs(_world_name) do
+				v = "levels/".. v .."/world"
+				if not PackageManager:loaded(v) then
+					log("[SafeHousePlus] Loaded Package: " .. v)
+					PackageManager:load(v)
+				end
+				v = v .."/world"
+				if not PackageManager:loaded(v) then
+					log("[SafeHousePlus] Loaded Package: " .. v)
+					PackageManager:load(v)
+				end
+			end
+			SafeHousePlus.Loot_Loaded = true
 		end
 	end
 end

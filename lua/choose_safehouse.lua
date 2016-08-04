@@ -315,10 +315,10 @@ function MenuManager:select_safehouse_menu_carry(params)
 	if alive(SafeHousePlus.Carry_Unit) then
 		SafeHousePlus.Carry_Unit:set_slot(0)
 	end
-	if not SafeHousePlus.Heavy_Loaded then
+	if not SafeHousePlus.Loot_Loaded then
 		local _dialog_data = {
 			title = "[Warning]",
-			text = "Required 'Heavy Loaded', please turn it on and restart the game.",
+			text = "Required 'Loot Loaded', please turn it on and restart the game.",
 			button_list = {{ text = "OK", is_cancel_button = true }},
 			id = tostring(math.random(0,0xFFFFFFFF))
 		}

@@ -16,17 +16,20 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			["safehouseplus_heavy_loaded_menu_desc"] = "Heavy Loaded will load tons of package to almost make sure you will not be albe to get crash when spawn something.",
 			["safehouseplus_no_attack_menu_title"] = "Dummy Enemy",
 			["safehouseplus_no_attack_menu_desc"] = "This will make enemy to be a dummy.",
-			["safehouseplus_no_unit_tool_menu_title"] = "Unit Tool",
-			["safehouseplus_no_unit_tool_menu_desc"] = "Unit Tool is main function of Customize your Safehouse",
+			["safehouseplus_unit_tool_menu_title"] = "Unit Tool",
+			["safehouseplus_unit_tool_menu_desc"] = "Unit Tool is main function of Customize your Safehouse",
+			["safehouseplus_loot_loaded_menu_title"] = "Loot Loaded",
+			["safehouseplus_loot_loaded_menu_desc"] = "You need to turn this ON when you want to use spawning loot function.",
 		})
 	end)
 
 	function SafeHousePlus:Reset()
 		self.settings = {
-			heavy_loaded = 1,
-			vehicle_loaded = 1,
 			no_attack = 1,
-			unit_tool = 1,
+			heavy_loaded = 0,
+			loot_loaded = 0,
+			vehicle_loaded = 0,
+			unit_tool = 0,
 		}
 		self:Save()
 	end
@@ -75,7 +78,23 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			value = _bool,
 			menu_id = SafeHousePlus.options_menu,
 		})
-		
+		MenuCallbackHandler.set_safehouseplus_loot_loaded_toggle_callback = function(self, item)
+			if tostring(item:value()) == "on" then
+				SafeHousePlus.settings.loot_loaded = 1
+			else
+				SafeHousePlus.settings.loot_loaded = 0
+			end
+			SafeHousePlus:Save()
+		end
+		_bool = SafeHousePlus.settings.loot_loaded == 1 and true or false
+		MenuHelper:AddToggle({
+			id = "set_safehouseplus_loot_loaded_toggle_callback",
+			title = "safehouseplus_loot_loaded_menu_title",
+			desc = "safehouseplus_loot_loaded_menu_desc",
+			callback = "set_safehouseplus_loot_loaded_toggle_callback",
+			value = _bool,
+			menu_id = SafeHousePlus.options_menu,
+		})
 		MenuCallbackHandler.set_safehouseplus_heavy_loaded_toggle_callback = function(self, item)
 			if tostring(item:value()) == "on" then
 				SafeHousePlus.settings.heavy_loaded = 1
@@ -84,7 +103,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			end
 			SafeHousePlus:Save()
 		end
-		local _bool = SafeHousePlus.settings.heavy_loaded == 1 and true or false
+		_bool = SafeHousePlus.settings.heavy_loaded == 1 and true or false
 		MenuHelper:AddToggle({
 			id = "set_safehouseplus_heavy_loaded_toggle_callback",
 			title = "safehouseplus_heavy_loaded_menu_title",
@@ -110,7 +129,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			value = _bool,
 			menu_id = SafeHousePlus.options_menu,
 		})
-		MenuCallbackHandler.set_safehouseplus_no_unit_tool_toggle_callback = function(self, item)
+		MenuCallbackHandler.set_safehouseplus_unit_tool_toggle_callback = function(self, item)
 			if tostring(item:value()) == "on" then
 				SafeHousePlus.settings.unit_tool = 1
 			else
@@ -120,10 +139,10 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 		end
 		_bool = SafeHousePlus.settings.unit_tool == 1 and true or false
 		MenuHelper:AddToggle({
-			id = "set_safehouseplus_no_unit_tool_toggle_callback",
-			title = "safehouseplus_no_unit_tool_menu_title",
-			desc = "safehouseplus_no_unit_tool_menu_desc",
-			callback = "set_safehouseplus_no_unit_tool_toggle_callback",
+			id = "set_safehouseplus_unit_tool_toggle_callback",
+			title = "safehouseplus_unit_tool_menu_title",
+			desc = "safehouseplus_unit_tool_menu_desc",
+			callback = "set_safehouseplus_unit_tool_toggle_callback",
 			value = _bool,
 			menu_id = SafeHousePlus.options_menu,
 		})
