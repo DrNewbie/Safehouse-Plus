@@ -5,6 +5,15 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 	SafeHousePlus.ModOptions = SafeHousePlus.ModPath .. "menus/modoptions.txt"
 	SafeHousePlus.settings = SafeHousePlus.settings or {}
 	SafeHousePlus.options_menu = "SafeHousePlus_menu"
+	SafeHousePlus.settings = {
+		no_attack = 1,
+		heavy_loaded = 0,
+		loot_loaded = 0,
+		vehicle_loaded = 0,
+		unit_tool = 0,
+		friendly_enemy = 0,
+		nogameover_before_timeup = 0,
+	}
 
 	Hooks:Add("LocalizationManagerPostInit", "SafeHousePlus_loc", function(loc)
 		LocalizationManager:add_localized_strings({
@@ -20,6 +29,10 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			["safehouseplus_unit_tool_menu_desc"] = "Unit Tool is main function of Customize your Safehouse",
 			["safehouseplus_loot_loaded_menu_title"] = "Loot Loaded",
 			["safehouseplus_loot_loaded_menu_desc"] = "You need to turn this ON when you want to use spawning loot function.",
+			["safehouseplus_friendly_enemy_menu_title"] = "Friendly Enemy",
+			["safehouseplus_friendly_enemy_menu_desc"] = "Convert enemy to your side",
+			["safehouseplus_nogameover_before_timeup_menu_title"] = "No gameover before time up ",
+			["safehouseplus_nogameover_before_timeup_menu_desc"] = "Spanw 1 AI so it will not gameover before time up after you down.",
 		})
 	end)
 
@@ -30,6 +43,8 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			loot_loaded = 0,
 			vehicle_loaded = 0,
 			unit_tool = 0,
+			friendly_enemy = 0,
+			nogameover_before_timeout = 0,
 		}
 		self:Save()
 	end
@@ -75,6 +90,40 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			title = "safehouseplus_vehicle_loaded_menu_title",
 			desc = "safehouseplus_vehicle_loaded_menu_desc",
 			callback = "set_safehouseplus_vehicle_loaded_toggle_callback",
+			value = _bool,
+			menu_id = SafeHousePlus.options_menu,
+		})
+		MenuCallbackHandler.set_safehouseplus_nogameover_before_timeup_toggle_callback = function(self, item)
+			if tostring(item:value()) == "on" then
+				SafeHousePlus.settings.nogameover_before_timeup = 1
+			else
+				SafeHousePlus.settings.nogameover_before_timeup = 0
+			end
+			SafeHousePlus:Save()
+		end
+		_bool = SafeHousePlus.settings.nogameover_before_timeup == 1 and true or false
+		MenuHelper:AddToggle({
+			id = "set_safehouseplus_nogameover_before_timeup_toggle_callback",
+			title = "safehouseplus_nogameover_before_timeup_menu_title",
+			desc = "safehouseplus_nogameover_before_timeup_menu_desc",
+			callback = "set_safehouseplus_nogameover_before_timeup_toggle_callback",
+			value = _bool,
+			menu_id = SafeHousePlus.options_menu,
+		})
+		MenuCallbackHandler.set_safehouseplus_friendly_enemy_toggle_callback = function(self, item)
+			if tostring(item:value()) == "on" then
+				SafeHousePlus.settings.friendly_enemy = 1
+			else
+				SafeHousePlus.settings.friendly_enemy = 0
+			end
+			SafeHousePlus:Save()
+		end
+		_bool = SafeHousePlus.settings.friendly_enemy == 1 and true or false
+		MenuHelper:AddToggle({
+			id = "set_safehouseplus_friendly_enemy_toggle_callback",
+			title = "safehouseplus_friendly_enemy_menu_title",
+			desc = "safehouseplus_friendly_enemy_menu_desc",
+			callback = "set_safehouseplus_friendly_enemy_toggle_callback",
 			value = _bool,
 			menu_id = SafeHousePlus.options_menu,
 		})
@@ -150,5 +199,5 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 
 	Hooks:Add("MenuManagerBuildCustomMenus", "SafeHousePlusOptions", function(menu_manager, nodes)
 		nodes[SafeHousePlus.options_menu] = MenuHelper:BuildMenu( SafeHousePlus.options_menu )
-		MenuHelper:AddMenuItem( MenuHelper.menus.lua_mod_options_menu, SafeHousePlus.options_menu, "safehouseplus_menu_title", "safehouseplus_menu_desc", 1 )
+		MenuHelper:AddMenuItem( MenuHelper.menus.lua_mod_options_menu, SafeHousePlus.options_menu, "safehouseplus_menu_title", "safehouseplus_menu_desc")
 	end)

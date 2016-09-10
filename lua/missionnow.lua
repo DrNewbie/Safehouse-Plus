@@ -11,8 +11,8 @@ function MissionManager:init(...)
 	self.safehouse_training_type = 0
 	self.safehouse_training_Init = 0
 	
-	CriminalsManager.MAX_NR_TEAM_AI = 1
-	CriminalsManager.MAX_NR_CRIMINALS = 2
+	CriminalsManager.MAX_NR_TEAM_AI = 3
+	CriminalsManager.MAX_NR_CRIMINALS = 4
 	
 	SafeHousePlus:Load()
 

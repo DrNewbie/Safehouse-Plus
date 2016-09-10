@@ -64,7 +64,7 @@ end
 if RequiredScript == "lib/units/enemies/cop/copdamage" then
 	local _f4 = CopDamage._on_death
 	function CopDamage:_on_death(...)
-		if managers.job:current_level_id() == "safehouse" then
+		if managers.job:current_level_id() == "safehouse" and managers.mission:Get_SafeHouse_Training_Init() > 0 then
 			local _type = managers.mission:Get_SafeHouse_Training_Type()
 			if _type == 0 then
 				SafeHousePlus:spawnsomething()
@@ -136,6 +136,11 @@ function SafeHousePlus:spawnsomething(_pos)
 			set_team(_unit, _unit:base():char_tweak().access == "gangster" and "gangster" or "combatant")
 			if SafeHousePlus.settings.no_attack == 1 then
 				_unit:brain():set_active(false)
+			end
+			if SafeHousePlus.settings.friendly_enemy == 1 then
+				managers.groupai:state():convert_hostage_to_criminal(_unit)
+				managers.groupai:state():sync_converted_enemy(_unit)
+				_unit:contour():add("friendly")
 			end
 		end
 	end
@@ -215,13 +220,8 @@ function no_invisible_walls()
 	end
 end
 
-function isPlaying()
-	if not BaseNetworkHandler then return false end
-	return BaseNetworkHandler._gamestate_filter.any_ingame_playing[ game_state_machine:last_queued_state_name() ]
-end
-
 function SafeHousePlus:DoInit()
-	if managers.mission and isPlaying() then
+	if managers.mission and Utils:IsInHeist() then
 		local _is_init = managers.mission:Get_SafeHouse_Training_Init() or 0
 		if not _is_init or _is_init <= 0 then
 			managers.mission:Set_SafeHouse_Training_Init(1)
@@ -239,7 +239,49 @@ function SafeHousePlus:DoInit()
 				end
 			end
 			no_invisible_walls()
+			if SafeHousePlus.settings.nogameover_before_timeup == 1 then
+				SafeHousePlus:Spawn_One_AI({alone = 1})
+			end
 			log("[SafeHousePlus] DoInit")
+		end
+	end
+end
+
+function SafeHousePlus:Spawn_One_AI(params)
+	params.alone = params.alone or 0
+	managers.groupai:state():remove_one_teamAI(SafeHousePlus.AIType)
+	if params.alone == 0 then
+		SafeHousePlus.AIType = ""
+	end
+	local _pos = Vector3(-3923, 1113, 1)
+	if params.alone == 1 then
+		_pos = Vector3(-827, 2643, 1)
+	end
+	local character_name = params.name or managers.criminals:get_free_character_name()
+	local lvl_tweak_data = Global.level_data and Global.level_data.level_id and tweak_data.levels[Global.level_data.level_id]
+	local unit_folder = lvl_tweak_data and lvl_tweak_data.unit_suit or "suit"
+	local ai_character_id = managers.criminals:character_static_data_by_name(character_name).ai_character_id
+	local unit_name = Idstring(tweak_data.blackmarket.characters[ai_character_id].npc_unit)
+	local unit = World:spawn_unit(unit_name, _pos, Vector3(0, 0, -0))
+	managers.network:session():send_to_peers_synched("set_unit", unit, character_name, "", 0, 0, tweak_data.levels:get_default_team_ID("player"))
+	managers.criminals:add_character(character_name, unit, nil, true)
+	unit:movement():set_character_anim_variables()
+	unit:brain():set_spawn_ai({
+		init_state = "idle",
+		params = {scan = true},
+		objective = objective
+	})
+	if SafeHousePlus.settings.no_attack == 1 or params.alone == 1 then
+		unit:brain():set_active(false)
+	else
+		unit:brain():set_active(true)
+	end
+	if params.alone == 0 then
+		SafeHousePlus.AIType = character_name
+		local _unit = managers.mission:Get_SafeHouse_Training_EnemyUnit()
+		managers.mission:Set_SafeHouse_Training_EnemyUnit(nil)
+		if alive(_unit) then
+			_unit:set_slot(0)
 		end
 	end
 end

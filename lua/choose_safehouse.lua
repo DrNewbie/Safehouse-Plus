@@ -234,33 +234,7 @@ function MenuManager:select_safehouse_spawan_pdg_menu(params)
 end
 
 function MenuManager:select_safehouse_spawan_pdg(params)
-	managers.groupai:state():remove_one_teamAI(SafeHousePlus.AIType)
-	SafeHousePlus.AIType = ""
-	local character_name = params.name or managers.criminals:get_free_character_name()
-	local lvl_tweak_data = Global.level_data and Global.level_data.level_id and tweak_data.levels[Global.level_data.level_id]
-	local unit_folder = lvl_tweak_data and lvl_tweak_data.unit_suit or "suit"
-	local ai_character_id = managers.criminals:character_static_data_by_name(character_name).ai_character_id
-	local unit_name = Idstring(tweak_data.blackmarket.characters[ai_character_id].npc_unit)
-	local unit = World:spawn_unit(unit_name, Vector3(-3923, 1113, 1), Vector3(0, 0, -0))
-	managers.network:session():send_to_peers_synched("set_unit", unit, character_name, "", 0, 0, tweak_data.levels:get_default_team_ID("player"))
-	managers.criminals:add_character(character_name, unit, nil, true)
-	unit:movement():set_character_anim_variables()
-	unit:brain():set_spawn_ai({
-		init_state = "idle",
-		params = {scan = true},
-		objective = objective
-	})
-	if SafeHousePlus.settings.no_attack == 1 then
-		unit:brain():set_active(false)
-	else
-		unit:brain():set_active(true)
-	end
-	SafeHousePlus.AIType = character_name
-	local _unit = managers.mission:Get_SafeHouse_Training_EnemyUnit()
-	managers.mission:Set_SafeHouse_Training_EnemyUnit(nil)
-	if alive(_unit) then
-		_unit:set_slot(0)
-	end	
+	SafeHousePlus:Spawn_One_AI(params)
 end
 
 function MenuManager:open_safehouse_menu_carry(params)

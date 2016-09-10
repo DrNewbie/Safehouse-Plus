@@ -8,7 +8,7 @@ function MenuManager:show_leave_safehouse_dialog(params)
 	local no_button = {}
 	no_button.text = managers.localization:text("dialog_no")
 	local plus_button = {}
-	plus_button.text = "Use SafeHouse+ Function"
+	plus_button.text = "Use 'SafeHouse Plus'"
 	plus_button.callback_func = callback(self, self, "open_safehouse_menu", {})
 	dialog_data.button_list = {plus_button, yes_button, no_button}
 	managers.system_menu:show(dialog_data)
