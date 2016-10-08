@@ -130,8 +130,6 @@ function SafeHousePlus:AllHumanUnits()
 			"units/payday2/characters/civ_female_bank_1/civ_female_bank_1",
 			"units/pd2_dlc_cage/characters/civ_female_bank_2/civ_female_bank_2",
 			"units/payday2/characters/civ_female_bank_manager_1/civ_female_bank_manager_1",
-			--"units/payday2/characters/civ_female_bikini_1/civ_female_bikini_1",
-			--"units/payday2/characters/civ_female_bikini_2/civ_female_bikini_2",
 			"units/payday2/characters/civ_female_casual_1/civ_female_casual_1",
 			"units/payday2/characters/civ_female_casual_2/civ_female_casual_2",
 			"units/payday2/characters/civ_female_casual_3/civ_female_casual_3",
@@ -285,7 +283,14 @@ function SafeHousePlus:AllHumanUnits()
 			"units/pd2_dlc_born/characters/ene_biker_female_1/ene_biker_female_1",
 			"units/pd2_dlc_born/characters/ene_biker_female_2/ene_biker_female_2",
 			"units/pd2_dlc_born/characters/ene_biker_female_3/ene_biker_female_3",
-			"units/pd2_dlc_born/characters/npc_male_mechanic/npc_male_mechanic"
+			"units/pd2_dlc_born/characters/npc_male_mechanic/npc_male_mechanic",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_2/ene_zeal_bulldozer_2",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield"
 		}
 	}
 end

@@ -121,7 +121,7 @@ function SafeHousePlus:spawnsomething(_pos)
 	end	
 	if _is_vehicle then
 		pos = Vector3(-3923, 1713, 1)
-	end	
+	end
 	_unit = safe_spawn_unit(Idstring(_spawn), pos, Vector3(0, 0, -0)) or nil
 	if not _unit then
 		return 

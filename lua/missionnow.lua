@@ -55,9 +55,9 @@ function MissionManager:init(...)
 					end
 				end
 			end
-			local _heavy_loaded_patch = {"packages/lvl_mad"}
+			local _heavy_loaded_patch = {"packages/lvl_mad", "packages/narr_born_1", "packages/lvl_chew", "packages/sm_wish", "packages/normal"}
 			for _, _package in pairs(_heavy_loaded_patch) do
-				if not PackageManager:loaded(_package) then
+				if PackageManager:package_exists(_package) and not PackageManager:loaded(_package) then
 					log("[SafeHousePlus] Loaded Package: " .. _package)
 					PackageManager:load(_package)
 				end

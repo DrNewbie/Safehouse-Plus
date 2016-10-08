@@ -2,60 +2,6 @@ local menu_id = "menu_safehouse_contract"
 
 _G.SafeHousePlus = _G.SafeHousePlus or {}
 
-Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenus_SafeHouse", function(menu_manager, nodes)
-	if nodes.lobby then
-		MenuHelper:NewMenu( menu_id )
-	end
-end)
-
-Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_SafeHouse", function(menu_manager, nodes)
-	if nodes.lobby then
-		MenuCallbackHandler.GetSafeHouseNow = function(self, item)
-			create_job({ difficulty = item._priority, job_id = "safehouse" })
-		end
-		MenuHelper:AddButton({
-			id = "safehouse_contract_ovk",
-			title = "safehouse_contract_ovk_title",
-			desc = "safehouse_contract_ovk_desc",
-			callback = "GetSafeHouseNow",
-			priority = "overkill_145",
-			menu_id = menu_id,
-		})
-		MenuHelper:AddButton({
-			id = "safehouse_contract_dw",
-			title = "safehouse_contract_dw_title",
-			desc = "safehouse_contract_dw_desc",
-			callback = "GetSafeHouseNow",
-			priority = "overkill_290",
-			menu_id = menu_id,
-		})
-	end
-end)
-
-Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_SafeHouse", function(menu_manager, nodes)
-	if nodes.lobby then
-		nodes[menu_id] = MenuHelper:BuildMenu( menu_id )
-		MenuHelper:AddMenuItem( nodes.lobby, menu_id, "menu_safehouse_contract_name", "menu_safehouse_contract_desc" )
-	end
-end)
-
-Hooks:Add("LocalizationManagerPostInit", "SafeHouse_loc", function(loc)
-	LocalizationManager:add_localized_strings({
-    ["menu_safehouse_contract"] = "SafeHouse+",
-    ["menu_safehouse_contract_name"] = "SafeHouse+",
-    ["menu_safehouse_contract_desc"] = "Go to SafeHouse in other difficulty",
-    ["safehouse_contract_ovk_title"] = "OVERKILL",
-    ["safehouse_contract_ovk_desc"] = "Safe House in OVERKILL",
-    ["safehouse_contract_dw_title"] = "DEATH WISH",
-    ["safehouse_contract_dw_desc"] = "Safe House in DEATH WISH",	
-  })
-end)
-
-function create_job(data)
-	MenuCallbackHandler:start_job({job_id = data.job_id, difficulty = data.difficulty})
-	Global.game_settings.permission = "friend"
-end
-
 function MenuManager:open_safehouse_menu()
 
 	SafeHousePlus:DoInit()
@@ -110,6 +56,10 @@ function mysplit(inputstr, sep)
 end
 
 function MenuManager:select_safehouse_adv_menu(params)
+	params.thisone = params.thisone or false
+	params.item = params.item or 0
+	params.start = params.start or 0
+	params.units = params.units or ""
 	if params.thisone then
 		SafeHousePlus:changetraning(0)
 		SafeHousePlus.EnemyType = params.units
@@ -150,10 +100,11 @@ function MenuManager:select_safehouse_adv_menu(params)
 	elseif params.item == 6 then _select_list = _all_units.all_russia or {}
 	elseif params.item == 7 then _select_list = _all_units.all_vehicle or {}
 	elseif params.item == 8 then _select_list = _all_units.all_others or {} end
-	if not _select_list then return end
+	if not _select_list or table.size(_select_list) == 0 then return end
+	
 	local _txt = {}
 	local opts = {}
-	local start = params.start or 0
+	local start = params.start
 	start = start >= 0 and start or 0
 	for k, v in pairs(_select_list) do
 		if k > start then
