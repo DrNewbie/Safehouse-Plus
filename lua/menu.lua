@@ -1,3 +1,5 @@
+local menu_id = "menu_safehouse_contract"
+
 _G.SafeHousePlus = _G.SafeHousePlus or {}
 
 	SafeHousePlus.ModPath = ModPath
@@ -13,6 +15,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 		unit_tool = 0,
 		friendly_enemy = 0,
 		nogameover_before_timeup = 0,
+		difficulty = 7,
 	}
 
 	Hooks:Add("LocalizationManagerPostInit", "SafeHousePlus_loc", function(loc)
@@ -25,7 +28,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			["safehouseplus_heavy_loaded_menu_desc"] = "Heavy Loaded will load tons of package to almost make sure you will not be albe to get crash when spawn something.",
 			["safehouseplus_no_attack_menu_title"] = "Dummy Enemy",
 			["safehouseplus_no_attack_menu_desc"] = "This will make enemy to be a dummy.",
-			["safehouseplus_unit_tool_menu_title"] = "Unit Tool",
+			["safehouseplus_unit_tool_menu_title"] = "[X]Unit Tool",
 			["safehouseplus_unit_tool_menu_desc"] = "Unit Tool is main function of Customize your Safehouse",
 			["safehouseplus_loot_loaded_menu_title"] = "Loot Loaded",
 			["safehouseplus_loot_loaded_menu_desc"] = "You need to turn this ON when you want to use spawning loot function.",
@@ -33,6 +36,8 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			["safehouseplus_friendly_enemy_menu_desc"] = "Convert enemy to your side",
 			["safehouseplus_nogameover_before_timeup_menu_title"] = "No gameover before time up ",
 			["safehouseplus_nogameover_before_timeup_menu_desc"] = "Spanw 1 AI so it will not gameover before time up after you down.",
+			["safehouseplus_difficulty_menu_title"] = "Difficulty",
+			["safehouseplus_difficulty_menu_desc"] = "Select your what difficulty you want to use.",
 		})
 	end)
 
@@ -45,6 +50,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			unit_tool = 0,
 			friendly_enemy = 0,
 			nogameover_before_timeout = 0,
+			difficulty = 7,
 		}
 		self:Save()
 	end
@@ -76,6 +82,19 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 	end)
 
 	Hooks:Add("MenuManagerPopulateCustomMenus", "SafeHousePlusOptions", function( menu_manager, nodes )
+		MenuCallbackHandler.SafeHousePlus_menu_UseWhat_callback = function(self, item)
+			SafeHousePlus.settings.difficulty = item:value()
+			SafeHousePlus:Save()
+		end
+		MenuHelper:AddMultipleChoice({
+			id = "SafeHousePlus_menu_UseWhat_callback",
+			title = "safehouseplus_difficulty_menu_title",
+			desc = "safehouseplus_difficulty_menu_desc",
+			callback = "SafeHousePlus_menu_UseWhat_callback",
+			items = {"menu_difficulty_normal", "menu_difficulty_hard", "menu_difficulty_very_hard", "menu_difficulty_overkill", "menu_difficulty_easy_wish", "menu_difficulty_apocalypse", "menu_difficulty_sm_wish"},
+			value = SafeHousePlus.settings.difficulty,
+			menu_id = SafeHousePlus.options_menu,
+		})
 		MenuCallbackHandler.set_safehouseplus_vehicle_loaded_toggle_callback = function(self, item)
 			if tostring(item:value()) == "on" then
 				SafeHousePlus.settings.vehicle_loaded = 1
@@ -201,3 +220,50 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 		nodes[SafeHousePlus.options_menu] = MenuHelper:BuildMenu( SafeHousePlus.options_menu )
 		MenuHelper:AddMenuItem( MenuHelper.menus.lua_mod_options_menu, SafeHousePlus.options_menu, "safehouseplus_menu_title", "safehouseplus_menu_desc")
 	end)
+	
+Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenus_SafeHouse", function(menu_manager, nodes)
+	if nodes.lobby then
+		MenuHelper:NewMenu( menu_id )
+	end
+end)
+
+Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_SafeHouse", function(menu_manager, nodes)
+	if nodes.lobby then
+		MenuCallbackHandler.GetSafeHouseNow = function(self, item)
+			local difficulties = {
+				"normal",
+				"hard",
+				"overkill",
+				"overkill_145",
+				"easy_wish",
+				"overkill_290",
+				"sm_wish"
+			}
+			local difficulty = difficulties[SafeHousePlus.settings.difficulty] or "normal"
+			MenuCallbackHandler:play_single_player()
+			MenuCallbackHandler:start_single_player_job({job_id = "chill", difficulty = difficulty})
+		end
+		MenuHelper:AddButton({
+			id = "GetSafeHouseNow",
+			title = "menu_safehouse_contract_name",
+			desc = "menu_safehouse_contract_desc",
+			callback = "GetSafeHouseNow",
+			menu_id = menu_id,
+		})
+	end
+end)
+
+Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_SafeHouse", function(menu_manager, nodes)
+	if nodes.lobby then
+		nodes[menu_id] = MenuHelper:BuildMenu( menu_id )
+		MenuHelper:AddMenuItem( nodes.lobby, menu_id, "menu_safehouse_contract_name", "menu_safehouse_contract_desc" )
+	end
+end)
+
+Hooks:Add("LocalizationManagerPostInit", "SafeHouse_loc", function(loc)
+	LocalizationManager:add_localized_strings({
+		["menu_safehouse_contract"] = "SafeHouse Plus",
+		["menu_safehouse_contract_name"] = "SafeHouse Plus",
+		["menu_safehouse_contract_desc"] = "Go to SafeHouse in other difficulty",
+	})
+end)

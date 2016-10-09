@@ -1,15 +1,12 @@
 _G.SafeHousePlus = _G.SafeHousePlus or {}
-local _missino_init_orig = MissionManager.init
-function MissionManager:init(...)
-
-	_missino_init_orig(self, ...)
+Hooks:PostHook(MissionManager, "init", "MissionManagerinit_PostHook", function(mis, ...)
 	
-	self.safehouse_training_unit_enemy = nil
-	self.safehouse_training_unit_ammo = nil
-	self.safehouse_training_unit_doctor = nil
-	self.safehouse_training_unit_grenade = nil
-	self.safehouse_training_type = 0
-	self.safehouse_training_Init = 0
+	mis.safehouse_training_unit_enemy = nil
+	mis.safehouse_training_unit_ammo = nil
+	mis.safehouse_training_unit_doctor = nil
+	mis.safehouse_training_unit_grenade = nil
+	mis.safehouse_training_type = 0
+	mis.safehouse_training_Init = 0
 	
 	CriminalsManager.MAX_NR_TEAM_AI = 3
 	CriminalsManager.MAX_NR_CRIMINALS = 4
@@ -23,7 +20,7 @@ function MissionManager:init(...)
 	if SafeHousePlus and SafeHousePlus.settings and 
 		tweak_data and tweak_data.narrative and tweak_data.levels and PackageManager and
 		PackageManager:loaded("packages/game_base_init") and
-		Global.game_settings and Global.game_settings.level_id == "safehouse" then
+		Global.game_settings and Global.game_settings.level_id == "chill" then
 		if SafeHousePlus.settings.vehicle_loaded == 1 then
 			log("[SafeHousePlus] Vehicle Loaded")
 			local _others_package = { "levels/narratives/bain/cage/world/world",
@@ -94,7 +91,7 @@ function MissionManager:init(...)
 			SafeHousePlus.Loot_Loaded = true
 		end
 	end
-end
+end )
 
 function MissionManager:Get_SafeHouse_Training_Init()
 	return self.safehouse_training_Init

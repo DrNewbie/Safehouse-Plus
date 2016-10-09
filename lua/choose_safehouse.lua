@@ -25,10 +25,10 @@ function MenuManager:open_safehouse_menu()
 	
 	opts[#opts+1] = { text = "Spawn 'Ammo & Health Bag'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 0}) }
 	
-	opts[#opts+1] = { text = "Play 'Quick Shooting'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 101}) }
+	--opts[#opts+1] = { text = "Play 'Quick Shooting'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 101}) }
 	
 	if SafeHousePlus.settings.unit_tool == 1 then
-		opts[#opts+1] = { text = "Unit Tool", callback_func = callback(self, self, "select_Unit_Tool_main", {}) }
+		--opts[#opts+1] = { text = "Unit Tool", callback_func = callback(self, self, "select_Unit_Tool_main", {}) }
 	end	
 	
 	opts[#opts+1] = { text = "[Cancel]", is_cancel_button = true }
@@ -250,7 +250,7 @@ function MenuManager:select_safehouse_menu_carry(params)
 		managers.system_menu:show(_dialog_data)	
 	else
 		if params.unit_name and params.unit_name ~= "" then
-			SafeHousePlus.Carry_Unit = World:spawn_unit(Idstring(params.unit_name), Vector3(-2604, 2864, 30), Vector3(0, 0, 0))
+			SafeHousePlus.Carry_Unit = World:spawn_unit(Idstring(params.unit_name), SafeHousePlus.Spawn_Location.Loot.pos, Vector3(0, 0, 0))
 			if SafeHousePlus.Carry_Unit and SafeHousePlus.Carry_Unit:interaction() then
 				SafeHousePlus.Carry_Unit:interaction():set_active(false, false)
 			end

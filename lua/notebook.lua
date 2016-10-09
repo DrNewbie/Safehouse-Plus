@@ -1,3 +1,5 @@
+_G.SafeHousePlus = _G.SafeHousePlus or {}
+
 function MenuManager:show_leave_safehouse_dialog(params)
 	local dialog_data = {}
 	dialog_data.title = managers.localization:text("dialog_safehouse_title")
