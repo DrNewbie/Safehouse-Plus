@@ -28,7 +28,7 @@ function MenuManager:open_safehouse_menu()
 	--opts[#opts+1] = { text = "Play 'Quick Shooting'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 101}) }
 	
 	if SafeHousePlus.settings.unit_tool == 1 then
-		--opts[#opts+1] = { text = "Unit Tool", callback_func = callback(self, self, "select_Unit_Tool_main", {}) }
+		opts[#opts+1] = { text = "Unit Tool", callback_func = callback(self, self, "select_Unit_Tool_main", {}) }
 	end	
 	
 	opts[#opts+1] = { text = "[Cancel]", is_cancel_button = true }

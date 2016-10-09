@@ -1,6 +1,6 @@
 _G.SafeHousePlus = _G.SafeHousePlus or {}
-local _f_NewRaycastWeaponBase_fire = NewRaycastWeaponBase.fire
-function NewRaycastWeaponBase:fire(...)
+
+Hooks:PostHook(NewRaycastWeaponBase, "fire", "Unit_Tool_Fire_Even", function(fff, ...)
 	local _bool = SafeHousePlus.Unit_Tool_Remover or SafeHousePlus.Unit_Tool_Rotation or SafeHousePlus.Unit_Tool_Position or SafeHousePlus.Unit_Tool_Spawner
 	if _bool then
 		--Copy from 'pierredjays'
@@ -14,7 +14,6 @@ function NewRaycastWeaponBase:fire(...)
 		if col_ray and col_ray.unit then
 			SafeHousePlus:select_unit_tool_menu({unit = col_ray.unit, position = col_ray.position})
 		end
-		self.set_ammo(self, 1.0)
+		fff.set_ammo(fff, 1.0)
 	end
-	return _f_NewRaycastWeaponBase_fire(self, ...)
-end
+end )

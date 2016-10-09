@@ -5,6 +5,14 @@ function SafeHousePlus:UnitTool_IsBlocked(name)
 		["5a44f0ce83502c87"] = true,
 		["b7851010bb0b6999"] = true,
 		["e8598b763a6cfbbe"] = true,
+		["3d1dbb71dd09573f"] = true,
+		["3d1dbb71dd09573f"] = true,
+		["2613bf87710a225d"] = true,
+		["96838a6af11cd388"] = true,
+		["f523dfbf01be1ad4"] = true,
+		["d974de76a56e065b"] = true,
+		["77c96b94aac2dc02"] = true,
+		["3691929004acc0d3"] = true,
 	}
 	return _list[name] or false
 end

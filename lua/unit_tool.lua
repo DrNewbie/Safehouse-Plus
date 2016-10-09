@@ -87,7 +87,7 @@ function MenuManager:select_Unit_Tool_load()
 		file:close()
 	end
 	for k, v in pairs(_list_final) do
-		_list_final[k] = {type = v.type, key = v.key, pos = Vector3(v.pos_x, v.pos_y, v.pos_z), rot = Rotation(v.rot_yaw, v.rot_pitch, v.rot_roll)}
+		_list_final[k] = {type = v.type, key = v.key, pos = v.pos:ToVector3(), rot = Rotation(v.rot[1], v.rot[2], v.rot[3])}
 	end
 	SafeHousePlus.Unit_Tool_Spawn_Remove_List = _list_final
 	
@@ -204,7 +204,7 @@ function SafeHousePlus:Unit_Tool_History_record(_unit, _type)
 		local _list = SafeHousePlus.Unit_Tool_Modify_History or {}
 		local _pos, _rot = _unit:position(), _unit:rotation()
 		if not SafeHousePlus:UnitTool_IsBlocked(tostring(_unit:name():key())) then
-			SafeHousePlus.Unit_Tool_Modify_History[#_list+1] = {type = _type, key = _unit:name():key(), pos_x = _pos.x, pos_y = _pos.y, pos_z = _pos.z, rot_yaw = _rot:yaw(), rot_pitch = _rot:pitch(), rot_roll = _rot:roll()}
+			SafeHousePlus.Unit_Tool_Modify_History[#_list+1] = {type = _type, key = _unit:name():key(), pos = _pos:ToString(), rot = {_rot:yaw(), _rot:pitch(), _rot:roll()}}
 		end
 		log("[Unit Tool]: {".. tostring(_unit) .."},{".. _type .."}")
 	end
@@ -273,21 +273,20 @@ function MenuManager:select_Unit_Tool_Pos_Rot_Setting(params)
 	if params.bool == "rot" then
 		SafeHousePlus.Unit_Tool_Rotation = true
 		SafeHousePlus.Unit_Tool_Rotation_Type = params._type
-		managers.hud:activate_objective( { text = "'Unit Tool - Rotation ".. _l[params._type] .."' ON" } )
+		managers.hud:show_hint( { text = "'Unit Tool - Rotation ".. _l[params._type] .."' ON" } )
 	else
 		SafeHousePlus.Unit_Tool_Position = true
 		SafeHousePlus.Unit_Tool_Position_Type = params._type
-		managers.hud:activate_objective( { text = "'Unit Tool - Position ".. _l[params._type] .."' ON" } )
+		managers.hud:show_hint( { text = "'Unit Tool - Position ".. _l[params._type] .."' ON" } )
 	end
 end
 
 function MenuManager:select_Unit_Tool_Remover_onoff(params)
 	SafeHousePlus.Unit_Tool_Remover = SafeHousePlus.Unit_Tool_Remover == false and true or false
 	if SafeHousePlus.Unit_Tool_Remover then
-		managers.hud:activate_objective( { text = "'Unit Tool - Remover' ON" } )
+		managers.hud:show_hint( { text = "'Unit Tool - Remover' ON" } )
 	else
 		managers.hud:show_hint( { text = "'Unit Tool - Remover' OFF" } )
-		managers.hud:activate_objective( { text = "" } )
 	end
 	SafeHousePlus.Unit_Tool_Spawner = false
 	SafeHousePlus.Unit_Tool_Spawner_setting = {}
@@ -301,11 +300,10 @@ function MenuManager:select_Unit_Tool_Spawner_onoff(params)
 
 	if params.bool == 2 then
 		SafeHousePlus.Unit_Tool_Spawner = true
-		managers.hud:activate_objective( { text = "'Unit Tool - Spawner' ON" } )
+		managers.hud:show_hint( { text = "'Unit Tool - Spawner' ON" } )
 	elseif params.bool == 1 then
 		SafeHousePlus.Unit_Tool_Spawner = false
 		managers.hud:show_hint( { text = "'Unit Tool - Spawner' OFF" } )
-		managers.hud:activate_objective( { text = "" } )
 	end
 	
 	local _select_list = SafeHousePlus.UnitToolSpawnerList or {}
@@ -406,7 +404,7 @@ end
 function MenuManager:select_Unit_Tool_Spawner_setting(params)
 	SafeHousePlus.Unit_Tool_Spawner_setting = {name = params.name}
 	SafeHousePlus.Unit_Tool_Spawner = true
-	managers.hud:activate_objective( { text = "'Unit Tool - Spawner' ON" } )
+	managers.hud:show_hint( { text = "'Unit Tool - Spawner' ON" } )
 	SafeHousePlus.Unit_Tool_Remover = false
 	SafeHousePlus.Unit_Tool_Position = false
 	SafeHousePlus.Unit_Tool_Position_Type = 0

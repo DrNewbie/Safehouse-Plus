@@ -16,6 +16,7 @@ SafeHousePlus.Spawn_Location = {
 	["Ammo_bag"] = {pos = Vector3(-140, 1055, -2)},
 	["Button_Outside_Spawn"] = {pos = Vector3(-275, 820, 150), rot = Rotation(90, 0, 90)},
 	["Button_Inside_Spawn_Loot"] = {pos = Vector3(790, 1300, 550), rot = Rotation(180, 0, 90)},
+	["Button_Inside_Other_1"] = {pos = Vector3(1880, 10, 550), rot = Rotation(90, 0, 90)},
 	["Loot"] = {pos = Vector3(570, 1280, 450)},
 }
 
@@ -50,9 +51,10 @@ if RequiredScript == "lib/units/beings/player/states/playerstandard" then
 		local _type = 0 
 		if _unit_pos == tostring(SafeHousePlus.Spawn_Location.Button_Outside_Spawn.pos) then
 			_type = 1
-		end
-		if _unit_pos == tostring(SafeHousePlus.Spawn_Location.Button_Inside_Spawn_Loot.pos) then
+		elseif _unit_pos == tostring(SafeHousePlus.Spawn_Location.Button_Inside_Spawn_Loot.pos) then
 			_type = 2
+		elseif _unit_pos == tostring(SafeHousePlus.Spawn_Location.Button_Inside_Other_1.pos) then
+			_type = 3
 		end
 		if _type == 0 then
 			return
@@ -66,6 +68,8 @@ if RequiredScript == "lib/units/beings/player/states/playerstandard" then
 				managers.menu:open_safehouse_menu()
 			elseif _type == 2 then
 				managers.menu:open_safehouse_menu_carry({start = 0})
+			elseif _type == 3 then
+				MenuCallbackHandler:leave_safehouse()
 			end
 		end
 	end )
@@ -245,7 +249,7 @@ function SafeHousePlus:spawnsomedoctor(_pos)
 end
 
 function SafeHousePlus:DoInit()
-	if managers.mission and Utils:IsInHeist() then
+	if managers.mission then
 		local _is_init = managers.mission:Get_SafeHouse_Training_Init() or 0
 		if not _is_init or _is_init <= 0 then
 			managers.mission:Set_SafeHouse_Training_Init(1)
@@ -264,6 +268,13 @@ function SafeHousePlus:DoInit()
 				_u:interaction():set_tweak_data(SafeHousePlus.Button_tweak_Name)
 				_u:interaction():set_active(true, false)
 			end
+			_u_pos = SafeHousePlus.Spawn_Location.Button_Inside_Other_1.pos
+			_u_rot = SafeHousePlus.Spawn_Location.Button_Inside_Other_1.rot
+			_u = safe_spawn_unit(SafeHousePlus.Button_Name, _u_pos, _u_rot) or nil
+			if _u and alive(_u) then
+				_u:interaction():set_tweak_data(SafeHousePlus.Button_tweak_Name)
+				_u:interaction():set_active(true, false)
+			end			
 			local managers = managers
 			local M_network = managers.network
 			local net_session = M_network:session()
