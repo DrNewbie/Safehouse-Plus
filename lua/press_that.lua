@@ -192,6 +192,22 @@ function SafeHousePlus:Unit_AfterSpawn(_unit)
 	end
 end
 
+function SafeHousePlus:killthis(_unit)
+	if SafeHousePlus.settings.corpse_no_gone ~= 1 then
+		_unit:set_slot(0)
+	else			
+		local col_ray = { }
+		col_ray.ray = Vector3(1, 0, 0)
+		col_ray.position = _unit:position() 
+		local action_data = {}
+		action_data.variant = "bullet"
+		action_data.damage = 99999
+		action_data.attacker_unit = managers.player:player_unit()
+		action_data.col_ray = col_ray			
+		_unit:character_damage():damage_bullet(action_data)
+	end
+end
+
 function SafeHousePlus:spawnsomething(_pos, _dead_unit)
 	_dead_unit = _dead_unit or nil
 	local pos = SafeHousePlus.Spawn_Location.Human.pos
@@ -200,7 +216,7 @@ function SafeHousePlus:spawnsomething(_pos, _dead_unit)
 		local _multi = 0
 		for k, v in pairs(SafeHousePlus.EnemyType_Multi) do
 			if v.unit and v.unit == _dead_unit then
-				v.unit:set_slot(0)
+				SafeHousePlus:killthis(v.unit)
 				v.unit = nil
 			end
 			if v.unit and alive(v.unit) then
@@ -229,7 +245,7 @@ function SafeHousePlus:spawnsomething(_pos, _dead_unit)
 	local _spawn = SafeHousePlus.EnemyType or "units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"
 	local _is_vehicle = _spawn:find("vehicles") and true or false
 	if alive(_unit) then
-		_unit:set_slot(0)
+		SafeHousePlus:killthis(_unit)
 	end	
 	if _is_vehicle then
 		pos = SafeHousePlus.Spawn_Location.Vehicles.pos
