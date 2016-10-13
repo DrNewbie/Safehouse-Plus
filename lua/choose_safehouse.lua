@@ -9,10 +9,7 @@ function MenuManager:open_safehouse_menu()
 	math.randomseed( os.time() )
 
 	local opts = {}
-	opts[#opts+1] = { text = "Spawn 'Bulldozer'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 1}) }
-	opts[#opts+1] = { text = "Spawn 'Cloaker'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 2}) }
-	opts[#opts+1] = { text = "Spawn 'Taser'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 3}) }
-	
+	opts[#opts+1] = { text = "Spawn 'Common'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 9}) }
 	opts[#opts+1] = { text = "Spawn 'COPS'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 1}) }
 	opts[#opts+1] = { text = "Spawn 'FBI'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 2}) }
 	opts[#opts+1] = { text = "Spawn 'SWATS'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 3}) }
@@ -22,9 +19,7 @@ function MenuManager:open_safehouse_menu()
 	opts[#opts+1] = { text = "Spawn 'Vehicle'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 7}) }
 	opts[#opts+1] = { text = "Spawn 'Others'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 8}) }
 	opts[#opts+1] = { text = "Spawn 'PAYDAY GANG'", callback_func = callback(self, self, "select_safehouse_spawan_pdg_menu", {}) }
-	
 	opts[#opts+1] = { text = "Spawn 'Ammo & Health Bag'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 0}) }
-	
 	--opts[#opts+1] = { text = "Play 'Quick Shooting'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 101}) }
 	
 	if SafeHousePlus.settings.unit_tool == 1 then
@@ -99,7 +94,8 @@ function MenuManager:select_safehouse_adv_menu(params)
 	elseif params.item == 5 then _select_list = _all_units.all_civs or {}
 	elseif params.item == 6 then _select_list = _all_units.all_russia or {}
 	elseif params.item == 7 then _select_list = _all_units.all_vehicle or {}
-	elseif params.item == 8 then _select_list = _all_units.all_others or {} end
+	elseif params.item == 8 then _select_list = _all_units.all_others or {}
+	elseif params.item == 9 then _select_list = _all_units.all_common or {} end
 	if not _select_list or table.size(_select_list) == 0 then return end
 	
 	local _txt = {}

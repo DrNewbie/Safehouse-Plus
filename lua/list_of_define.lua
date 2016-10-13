@@ -31,6 +31,20 @@ end
 
 function SafeHousePlus:AllHumanUnits()
 	return {
+		all_common = {
+			"units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1",
+			"units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2",
+			"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3",
+			"units/payday2/characters/ene_shield_1/ene_shield_1",
+			"units/payday2/characters/ene_shield_2/ene_shield_2",
+			"units/payday2/characters/ene_sniper_1/ene_sniper_1",
+			"units/payday2/characters/ene_sniper_2/ene_sniper_2",
+			"units/payday2/characters/ene_spook_1/ene_spook_1",
+			"units/payday2/characters/ene_tazer_1/ene_tazer_1",
+			"units/payday2/characters/ene_medic_m4/ene_medic_m4",
+			"units/payday2/characters/ene_medic_r870/ene_medic_r870"
+		},
+	
 		all_cops = {
 			"units/payday2/characters/ene_cop_1/ene_cop_1",
 			"units/payday2/characters/ene_cop_2/ene_cop_2",
@@ -76,9 +90,6 @@ function SafeHousePlus:AllHumanUnits()
 			"units/payday2/characters/ene_fbi_heavy_1/ene_fbi_heavy_1",
 			"units/payday2/characters/ene_fbi_swat_1/ene_fbi_swat_1",
 			"units/payday2/characters/ene_fbi_swat_2/ene_fbi_swat_2",
-			"units/payday2/characters/ene_shield_1/ene_shield_1",
-			"units/payday2/characters/ene_sniper_1/ene_sniper_1",
-			"units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1",
 			"units/payday2/characters/ene_fbi_office_1/ene_fbi_office_1",
 			"units/payday2/characters/ene_fbi_office_2/ene_fbi_office_2",
 			"units/payday2/characters/ene_fbi_office_3/ene_fbi_office_3",
@@ -91,15 +102,9 @@ function SafeHousePlus:AllHumanUnits()
 			"units/payday2/characters/ene_city_swat_1/ene_city_swat_1",
 			"units/payday2/characters/ene_city_swat_2/ene_city_swat_2",
 			"units/payday2/characters/ene_city_swat_3/ene_city_swat_3",
-			"units/payday2/characters/ene_shield_2/ene_shield_2",
-			"units/payday2/characters/ene_sniper_2/ene_sniper_2",
-			"units/payday2/characters/ene_spook_1/ene_spook_1",
 			"units/payday2/characters/ene_swat_1/ene_swat_1",
 			"units/payday2/characters/ene_swat_2/ene_swat_2",
 			"units/payday2/characters/ene_swat_heavy_1/ene_swat_heavy_1",
-			"units/payday2/characters/ene_tazer_1/ene_tazer_1",
-			"units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2",
-			"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3",
 			--"units/payday2/characters/ene_bulldozer_4/ene_bulldozer_4"
 		},
 
