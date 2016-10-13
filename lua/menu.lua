@@ -16,6 +16,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 		friendly_enemy = 0,
 		nogameover_before_timeup = 0,
 		difficulty = 7,
+		multi_type = 0,
 	}
 
 	Hooks:Add("LocalizationManagerPostInit", "SafeHousePlus_loc", function(loc)
@@ -38,6 +39,8 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			["safehouseplus_nogameover_before_timeup_menu_desc"] = "Spanw 1 AI so it will not gameover before time up after you down.",
 			["safehouseplus_difficulty_menu_title"] = "Difficulty",
 			["safehouseplus_difficulty_menu_desc"] = "Select your what difficulty you want to use.",
+			["safehouseplus_multi_type_menu_title"] = "Multi-Type",
+			["safehouseplus_multi_type_menu_desc"] = "Enable spawn different type enemy.",
 		})
 	end)
 
@@ -51,6 +54,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			friendly_enemy = 0,
 			nogameover_before_timeout = 0,
 			difficulty = 7,
+			multi_type = 0,
 		}
 		self:Save()
 	end
@@ -109,6 +113,23 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			title = "safehouseplus_vehicle_loaded_menu_title",
 			desc = "safehouseplus_vehicle_loaded_menu_desc",
 			callback = "set_safehouseplus_vehicle_loaded_toggle_callback",
+			value = _bool,
+			menu_id = SafeHousePlus.options_menu,
+		})
+		MenuCallbackHandler.set_safehouseplus_multi_type_toggle_callback = function(self, item)
+			if tostring(item:value()) == "on" then
+				SafeHousePlus.settings.multi_type = 1
+			else
+				SafeHousePlus.settings.multi_type = 0
+			end
+			SafeHousePlus:Save()
+		end
+		_bool = SafeHousePlus.settings.multi_type == 1 and true or false
+		MenuHelper:AddToggle({
+			id = "set_safehouseplus_multi_type_toggle_callback",
+			title = "safehouseplus_multi_type_menu_title",
+			desc = "safehouseplus_multi_type_menu_desc",
+			callback = "set_safehouseplus_multi_type_toggle_callback",
 			value = _bool,
 			menu_id = SafeHousePlus.options_menu,
 		})

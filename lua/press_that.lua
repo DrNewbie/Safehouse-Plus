@@ -1,5 +1,7 @@
 _G.SafeHousePlus = _G.SafeHousePlus or {}
 SafeHousePlus.EnemyType = SafeHousePlus.EnemyType or "units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"
+SafeHousePlus.EnemyType_Multi = SafeHousePlus.EnemyType_Multi or {}
+SafeHousePlus.EnemyType_Multi_XY2Fix = {x = 100, y = 0, z = 0}
 SafeHousePlus.AIType = SafeHousePlus.AIType or ""
 SafeHousePlus.KillCounter = SafeHousePlus.KillCounter or 0
 SafeHousePlus.KillCounterTime = SafeHousePlus.KillCounterTime or 0
@@ -134,7 +136,7 @@ if RequiredScript == "lib/units/enemies/cop/copdamage" then
 		end
 		local _type = managers.mission:Get_SafeHouse_Training_Type()
 		if _type == 0 then
-			SafeHousePlus:spawnsomething()
+			SafeHousePlus:spawnsomething(nil, cop._unit)
 		--[[elseif _type == 1 then
 			SafeHousePlus.KillCounter = SafeHousePlus.KillCounter + 1
 			if SafeHousePlus.KillCounter == 1 or not SafeHousePlus.KillCounterTime then
@@ -170,14 +172,60 @@ function SafeHousePlus:changetraning(_type)
 	managers.mission:Set_SafeHouse_Training_Type(_type or 0)
 end
 
-function SafeHousePlus:spawnsomething(_pos)
+function SafeHousePlus:Unit_AfterSpawn(_unit)
+	local _access = _unit:base():char_tweak().access
+	if _access == "civ_male" or _access == "civ_female" then
+		_unit:movement():set_stance("hos", nil, true)
+		_unit:interaction():set_tweak_data("hostage_move")
+	else
+		local _team = _unit:base():char_tweak().access == "gangster" and "gangster" or "combatant"
+		local _team_id = tweak_data.levels:get_default_team_ID(_team)
+		_unit:movement():set_team(managers.groupai:state():team_data(_team_id))			
+		if SafeHousePlus.settings.no_attack == 1 then
+			_unit:brain():set_active(false)
+		end
+		if SafeHousePlus.settings.friendly_enemy == 1 then
+			managers.groupai:state():convert_hostage_to_criminal(_unit)
+			managers.groupai:state():sync_converted_enemy(_unit)
+			_unit:contour():add("friendly")
+		end
+	end
+end
+
+function SafeHousePlus:spawnsomething(_pos, _dead_unit)
+	_dead_unit = _dead_unit or nil
+	local pos = SafeHousePlus.Spawn_Location.Human.pos
+	if _pos then pos = _pos end
+	if SafeHousePlus.settings.multi_type == 1 then
+		local _multi = 0
+		for k, v in pairs(SafeHousePlus.EnemyType_Multi) do
+			if v.unit and v.unit == _dead_unit then
+				v.unit:set_slot(0)
+				v.unit = nil
+			end
+			if v.unit and alive(v.unit) then
+				local _Unit_In_Sphere = World:find_units("sphere", v.unit:position()+ Vector3(0, 0, 20), 1) or {}
+				if _Unit_In_Sphere then
+					_multi = _multi + 1
+				end
+			end
+			if not v.unit and v.enable and v.unit_name then
+				local _XY = SafeHousePlus.EnemyType_Multi_XY2Fix
+				_unit = safe_spawn_unit(Idstring(v.unit_name), pos + Vector3(_XY.x*_multi, _XY.y*_multi, _XY.z*_multi), SafeHousePlus.Spawn_Location.Human.rot)
+				SafeHousePlus:Unit_AfterSpawn(_unit)
+				SafeHousePlus.EnemyType_Multi[k].unit = _unit
+			end
+			if not v.enable then
+				SafeHousePlus.EnemyType_Multi[k] = {}
+			end
+		end
+		return
+	end
 	if SafeHousePlus.AIType then
 		managers.groupai:state():remove_one_teamAI(SafeHousePlus.AIType)
 		SafeHousePlus.AIType = ""
 	end
 	local _unit = managers.mission:Get_SafeHouse_Training_EnemyUnit()
-	local pos = SafeHousePlus.Spawn_Location.Human.pos
-	if _pos then pos = _pos end
 	local _spawn = SafeHousePlus.EnemyType or "units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"
 	local _is_vehicle = _spawn:find("vehicles") and true or false
 	if alive(_unit) then
@@ -195,23 +243,7 @@ function SafeHousePlus:spawnsomething(_pos)
 	end
 	managers.mission:Set_SafeHouse_Training_EnemyUnit(_unit)
 	if not _is_vehicle then
-		local _access = _unit:base():char_tweak().access
-		if _access == "civ_male" or _access == "civ_female" then
-			_unit:movement():set_stance("hos", nil, true)
-			_unit:interaction():set_tweak_data("hostage_move")
-		else
-			local _team = _unit:base():char_tweak().access == "gangster" and "gangster" or "combatant"
-			local _team_id = tweak_data.levels:get_default_team_ID(_team)
-			_unit:movement():set_team(managers.groupai:state():team_data(_team_id))			
-			if SafeHousePlus.settings.no_attack == 1 then
-				_unit:brain():set_active(false)
-			end
-			if SafeHousePlus.settings.friendly_enemy == 1 then
-				managers.groupai:state():convert_hostage_to_criminal(_unit)
-				managers.groupai:state():sync_converted_enemy(_unit)
-				_unit:contour():add("friendly")
-			end
-		end
+		SafeHousePlus:Unit_AfterSpawn(_unit)
 	end
 end
 

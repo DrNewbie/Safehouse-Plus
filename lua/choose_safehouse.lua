@@ -56,8 +56,18 @@ function MenuManager:select_safehouse_adv_menu(params)
 	params.start = params.start or 0
 	params.units = params.units or ""
 	if params.thisone then
-		SafeHousePlus:changetraning(0)
+		if SafeHousePlus.settings.multi_type == 1 then
+			local _txt_array = mysplit(params.units, "/")
+			local _idx = _txt_array[#_txt_array]
+			if SafeHousePlus.EnemyType_Multi[_idx] then
+				if SafeHousePlus.EnemyType_Multi[_idx].unit and alive(SafeHousePlus.EnemyType_Multi[_idx].unit) then
+					SafeHousePlus.EnemyType_Multi[_idx].unit:set_slot(0)
+				end
+			end
+			SafeHousePlus.EnemyType_Multi[_idx] = {unit = nil, enable = true, unit_name = params.units}
+		end
 		SafeHousePlus.EnemyType = params.units
+		SafeHousePlus:changetraning(0)
 		SafeHousePlus:spawnsomething()
 		SafeHousePlus:spawnsomeammo()
 		SafeHousePlus:spawnsomedoctor()
