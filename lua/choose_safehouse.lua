@@ -22,7 +22,7 @@ function MenuManager:open_safehouse_menu()
 	opts[#opts+1] = { text = "Spawn 'PAYDAY GANG'", callback_func = callback(self, self, "select_safehouse_spawan_pdg_menu", {}) }
 	opts[#opts+1] = { text = "Spawn 'Ammo & Health Bag'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 0}) }
 	if SC and SC.Hooks then
-		opts[#opts+1] = { text = "Spawn 'SC's", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 10}) }	
+		opts[#opts+1] = { text = "Spawn 'SC'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 10}) }	
 	end
 	--opts[#opts+1] = { text = "Play 'Quick Shooting'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 101}) }
 	
