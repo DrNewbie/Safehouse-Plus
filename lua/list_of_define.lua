@@ -42,7 +42,14 @@ function SafeHousePlus:AllHumanUnits()
 			"units/payday2/characters/ene_spook_1/ene_spook_1",
 			"units/payday2/characters/ene_tazer_1/ene_tazer_1",
 			"units/payday2/characters/ene_medic_m4/ene_medic_m4",
-			"units/payday2/characters/ene_medic_r870/ene_medic_r870"
+			"units/payday2/characters/ene_medic_r870/ene_medic_r870",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_2/ene_zeal_bulldozer_2",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield"
 		},
 	
 		all_cops = {
@@ -296,14 +303,7 @@ function SafeHousePlus:AllHumanUnits()
 			"units/pd2_dlc_born/characters/ene_biker_female_1/ene_biker_female_1",
 			"units/pd2_dlc_born/characters/ene_biker_female_2/ene_biker_female_2",
 			"units/pd2_dlc_born/characters/ene_biker_female_3/ene_biker_female_3",
-			"units/pd2_dlc_born/characters/npc_male_mechanic/npc_male_mechanic",
-			"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_2/ene_zeal_bulldozer_2",
-			"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer_3/ene_zeal_bulldozer_3",
-			"units/pd2_dlc_gitgud/characters/ene_zeal_bulldozer/ene_zeal_bulldozer",
-			"units/pd2_dlc_gitgud/characters/ene_zeal_cloaker/ene_zeal_cloaker",
-			"units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat",
-			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy",
-			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield"
+			"units/pd2_dlc_born/characters/npc_male_mechanic/npc_male_mechanic"
 		},
 		
 		all_sc_mod = {
@@ -328,6 +328,25 @@ function SafeHousePlus:AllHumanUnits()
 			"units/pd2_dlc_mad/characters/ene_akan_fbi_1/ene_akan_fbi_1",
 			"units/pd2_dlc_mad/characters/ene_akan_fbi_2/ene_akan_fbi_2",
 			"units/pd2_dlc_mad/characters/ene_akan_veteran_1/ene_akan_veteran_1"
+		},
+		
+		all_dw_plus = {
+			"units/payday2/characters/ene_phalanx_2/ene_phalanx_2",
+			"units/payday2/characters/ene_city_swat_4/ene_city_swat_4",
+			"units/payday2/characters/ene_fbi_4/ene_fbi_4",
+			"units/payday2/characters/ene_bulldozer_5/ene_bulldozer_5",
+			"units/payday2/characters/ene_bulldozer_6/ene_bulldozer_6",
+			"units/payday2/characters/ene_bulldozer_7/ene_bulldozer_7",
+			"units/payday2/characters/ene_tazer_2/ene_tazer_2",
+			"units/pd2_dlc_gitgud/characters/ene_zealdozer_benelli/ene_zealdozer_benelli",
+			"units/pd2_dlc_gitgud/characters/ene_zealdozer_saiga/ene_zealdozer_saiga",
+			"units/pd2_dlc_gitgud/characters/ene_zealdozer_m249/ene_zealdozer_m249",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_benelli/ene_zeal_swat_heavy_benelli",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_ump/ene_zeal_swat_heavy_ump",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_g36/ene_zeal_swat_heavy_g36",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy_scar/ene_zeal_swat_heavy_scar",
+			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_phalanx/ene_zeal_swat_phalanx",
+			"units/pd2_dlc_gitgud/characters/ene_zealdozer_titan/ene_zealdozer_titan"
 		}
 	}
 end

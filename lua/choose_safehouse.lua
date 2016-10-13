@@ -2,6 +2,7 @@ local menu_id = "menu_safehouse_contract"
 
 _G.SafeHousePlus = _G.SafeHousePlus or {}
 _G.SC = _G.SC or {}
+_G.DW = _G.DW or {}
 
 function MenuManager:open_safehouse_menu()
 
@@ -23,6 +24,9 @@ function MenuManager:open_safehouse_menu()
 	opts[#opts+1] = { text = "Spawn 'Ammo & Health Bag'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 0}) }
 	if SC and SC.Hooks then
 		opts[#opts+1] = { text = "Spawn 'SC'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 10}) }	
+	end
+	if DW and DW.Hooks then
+		opts[#opts+1] = { text = "Spawn 'DW Plus'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 11}) }	
 	end
 	--opts[#opts+1] = { text = "Play 'Quick Shooting'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 101}) }
 	
@@ -110,7 +114,8 @@ function MenuManager:select_safehouse_adv_menu(params)
 	elseif params.item == 7 then _select_list = _all_units.all_vehicle or {}
 	elseif params.item == 8 then _select_list = _all_units.all_others or {}
 	elseif params.item == 9 then _select_list = _all_units.all_common or {}
-	elseif params.item == 10 then _select_list = _all_units.all_sc_mod or {} end
+	elseif params.item == 10 then _select_list = _all_units.all_sc_mod or {}
+	elseif params.item == 11 then _select_list = _all_units.all_dw_plus or {} end
 	if not _select_list or table.size(_select_list) == 0 then return end
 	
 	local _txt = {}

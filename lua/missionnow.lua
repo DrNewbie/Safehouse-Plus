@@ -52,7 +52,7 @@ Hooks:PostHook(MissionManager, "init", "MissionManagerinit_PostHook", function(m
 					end
 				end
 			end
-			local _heavy_loaded_patch = {"packages/lvl_mad", "packages/narr_born_1", "packages/lvl_chew", "packages/sm_wish", "packages/normal"}
+			local _heavy_loaded_patch = {"packages/lvl_mad", "packages/narr_born_1", "packages/lvl_chew", "packages/normal"}
 			for _, _package in pairs(_heavy_loaded_patch) do
 				if PackageManager:package_exists(_package) and not PackageManager:loaded(_package) then
 					log("[SafeHousePlus] Loaded Package: " .. _package)
@@ -60,6 +60,10 @@ Hooks:PostHook(MissionManager, "init", "MissionManagerinit_PostHook", function(m
 				end
 			end
 			SafeHousePlus.Heavy_Loaded = true
+		end
+		if PackageManager:package_exists("packages/sm_wish") and not PackageManager:loaded("packages/sm_wish") then
+			log("[SafeHousePlus] Loaded Package: " .. "packages/sm_wish")
+			PackageManager:load("packages/sm_wish")
 		end
 		if SafeHousePlus.settings.loot_loaded == 1 then
 			log("[SafeHousePlus] Loot Loaded")

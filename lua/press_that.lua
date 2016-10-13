@@ -181,7 +181,7 @@ function SafeHousePlus:Unit_AfterSpawn(_unit)
 		local _team = _unit:base():char_tweak().access == "gangster" and "gangster" or "combatant"
 		local _team_id = tweak_data.levels:get_default_team_ID(_team)
 		_unit:movement():set_team(managers.groupai:state():team_data(_team_id))			
-		if SafeHousePlus.settings.no_attack == 1 then
+		if SafeHousePlus.settings.no_attack == 1 and _unit:brain() then
 			_unit:brain():set_active(false)
 		end
 		if SafeHousePlus.settings.friendly_enemy == 1 then
