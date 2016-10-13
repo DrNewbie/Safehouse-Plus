@@ -1,4 +1,5 @@
 _G.SafeHousePlus = _G.SafeHousePlus or {}
+_G.SC = _G.SC or {}
 Hooks:PostHook(MissionManager, "init", "MissionManagerinit_PostHook", function(mis, ...)
 	
 	mis.safehouse_training_unit_enemy = nil

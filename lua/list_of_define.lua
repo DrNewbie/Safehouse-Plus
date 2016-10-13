@@ -304,6 +304,30 @@ function SafeHousePlus:AllHumanUnits()
 			"units/pd2_dlc_gitgud/characters/ene_zeal_swat/ene_zeal_swat",
 			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_heavy/ene_zeal_swat_heavy",
 			"units/pd2_dlc_gitgud/characters/ene_zeal_swat_shield/ene_zeal_swat_shield"
+		},
+		
+		all_sc_mod = {
+			"units/payday2/characters/ene_bulldozer_2_hw/ene_bulldozer_2_hw",
+			"units/payday2/characters/ene_fbi_swat_3/ene_fbi_swat_3",
+			"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_ump/ene_akan_fbi_swat_ump",
+			"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_ak47_ass/ene_akan_fbi_swat_dw_ak47_ass",
+			"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_r870/ene_akan_fbi_swat_dw_r870",
+			"units/pd2_dlc_mad/characters/ene_akan_fbi_swat_dw_ump/ene_akan_fbi_swat_dw_ump",
+			"units/pd2_dlc_mad/characters/ene_akan_cs_cop_akmsu_smg/ene_akan_cs_cop_akmsu_smg",
+			"units/pd2_dlc_mad/characters/ene_akan_cs_cop_ak47_ass/ene_akan_cs_cop_ak47_ass",
+			"units/pd2_dlc_mad/characters/ene_akan_cs_cop_asval_smg/ene_akan_cs_cop_asval_smg",
+			"units/pd2_dlc_mad/characters/ene_akan_cs_swat_ak47_ass/ene_akan_cs_swat_ak47_ass",
+			"units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_dw/ene_akan_fbi_heavy_dw",
+			"units/pd2_dlc_mad/characters/ene_akan_fbi_heavy_dw_r870/ene_akan_fbi_heavy_dw_r870",
+			--"units/pd2_dlc_vip/characters/ene_vip_2/ene_vip_2",
+			"units/payday2/characters/ene_veteran_cop_1/ene_veteran_cop_1",
+			"units/payday2/characters/ene_veteran_cop_2/ene_veteran_cop_2",
+			"units/payday2/characters/ene_acc_boom_helmet/ene_acc_boom_helmet",
+			"units/payday2/characters/ene_grenadier_1/ene_grenadier_1",
+			"units/pd2_dlc_mad/characters/ene_akan_grenadier_1/ene_akan_grenadier_1",
+			"units/pd2_dlc_mad/characters/ene_akan_fbi_1/ene_akan_fbi_1",
+			"units/pd2_dlc_mad/characters/ene_akan_fbi_2/ene_akan_fbi_2",
+			"units/pd2_dlc_mad/characters/ene_akan_veteran_1/ene_akan_veteran_1"
 		}
 	}
 end
