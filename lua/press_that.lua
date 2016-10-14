@@ -1,7 +1,7 @@
 _G.SafeHousePlus = _G.SafeHousePlus or {}
 SafeHousePlus.EnemyType = SafeHousePlus.EnemyType or "units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3"
 SafeHousePlus.EnemyType_Multi = SafeHousePlus.EnemyType_Multi or {}
-SafeHousePlus.EnemyType_Multi_XY2Fix = {x = 100, y = 0, z = 0}
+SafeHousePlus.EnemyType_Multi_XY2Fix = {x = 0, y = 100, z = 0}
 SafeHousePlus.AIType = SafeHousePlus.AIType or ""
 SafeHousePlus.KillCounter = SafeHousePlus.KillCounter or 0
 SafeHousePlus.KillCounterTime = SafeHousePlus.KillCounterTime or 0
@@ -10,9 +10,9 @@ SafeHousePlus.Button_Name = Idstring("units/pd2_dlc_chill/props/chl_prop_tape_re
 SafeHousePlus.Button_tweak_Name = "press_play_jacket_sound"
 
 SafeHousePlus.Spawn_Location = {
-	["Human"] = {pos = Vector3(-790, 1720, -2), rot = Rotation(180, 0, 0)},
+	["Human"] = {pos = Vector3(-1125, -200, -2), rot = Rotation(-90, 0, 0)},
 	["Alone_Human"] = {pos = Vector3(-320, 555, 2), rot = Rotation(0, 0, 0)},
-	["Vehicles"] = {pos = Vector3(-700, 1240, -2)},
+	["Vehicles"] = {pos = Vector3(-820, 930, -2)},
 	["Grenade_case"] = {pos = Vector3(-240, 1055, -2)},
 	["Doctor_bag"] = {pos = Vector3(-140, 955, -2)},
 	["Ammo_bag"] = {pos = Vector3(-140, 1055, -2)},
