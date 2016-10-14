@@ -15,3 +15,25 @@ function MenuManager:show_leave_safehouse_dialog(params)
 	dialog_data.button_list = {plus_button, yes_button, no_button}
 	managers.system_menu:show(dialog_data)
 end
+
+function MenuCallbackHandler:play_safehouse(params)
+	local function yes_func()
+		self:play_single_player()
+		Global.mission_manager.has_played_tutorial = true
+		self:start_single_player_job({job_id = "safehouse", difficulty = SafeHousePlus.Difficulty})
+	end
+	if params.skip_question then
+		yes_func()
+		return
+	end
+	managers.menu:show_play_safehouse_question({yes_func = yes_func})
+end
+
+function CustomSafehouseGuiPageMap:_go_to_safehouse()
+	if Global.game_settings.single_player then
+		MenuCallbackHandler:play_single_player()
+		MenuCallbackHandler:start_single_player_job({job_id = "chill", difficulty = SafeHousePlus.Difficulty})
+	else
+		MenuCallbackHandler:start_job({job_id = "chill", difficulty = SafeHousePlus.Difficulty})
+	end
+end

@@ -19,6 +19,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 		multi_type = 0,
 		corpse_no_gone = 0
 	}
+	SafeHousePlus.Difficulty = SafeHousePlus.Difficulty or "normal"
 
 	Hooks:Add("LocalizationManagerPostInit", "SafeHousePlus_loc", function(loc)
 		LocalizationManager:add_localized_strings({
@@ -73,6 +74,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 		else
 			self:Reset()
 		end
+		self:Common_Refresh()
 	end
 
 	function SafeHousePlus:Save()
@@ -81,6 +83,20 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			file:write(json.encode(self.settings))
 			file:close()
 		end
+		self:Common_Refresh()
+	end
+	
+	function SafeHousePlus:Common_Refresh()
+		local difficulties = {
+			"normal",
+			"hard",
+			"overkill",
+			"overkill_145",
+			"easy_wish",
+			"overkill_290",
+			"sm_wish"
+		}
+		SafeHousePlus.Difficulty = difficulties[SafeHousePlus.settings.difficulty] or "normal"	
 	end
 
 	SafeHousePlus:Load()
@@ -272,18 +288,8 @@ end)
 Hooks:Add("MenuManagerPopulateCustomMenus", "MenuManagerPopulateCustomMenus_SafeHouse", function(menu_manager, nodes)
 	if nodes.lobby then
 		MenuCallbackHandler.GetSafeHouseNow = function(self, item)
-			local difficulties = {
-				"normal",
-				"hard",
-				"overkill",
-				"overkill_145",
-				"easy_wish",
-				"overkill_290",
-				"sm_wish"
-			}
-			local difficulty = difficulties[SafeHousePlus.settings.difficulty] or "normal"
 			MenuCallbackHandler:play_single_player()
-			MenuCallbackHandler:start_single_player_job({job_id = "chill", difficulty = difficulty})
+			MenuCallbackHandler:start_single_player_job({job_id = "chill", difficulty = SafeHousePlus.Difficulty})
 		end
 		MenuHelper:AddButton({
 			id = "GetSafeHouseNow",
