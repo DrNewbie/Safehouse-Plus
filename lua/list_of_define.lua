@@ -30,7 +30,8 @@ function SafeHousePlus:CarryandProp()
 end
 
 function SafeHousePlus:AllHumanUnits()
-	return {
+	local _char_map = tweak_data.character.character_map()
+	local _using_map = {
 		all_common = {
 			"units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1",
 			"units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2",
@@ -349,4 +350,24 @@ function SafeHousePlus:AllHumanUnits()
 			"units/pd2_dlc_gitgud/characters/ene_zealdozer_titan/ene_zealdozer_titan"
 		}
 	}
+	if SafeHousePlus.Heavy_Loaded then
+		local _bool_list = {}
+		for _, _table in pairs(_using_map) do
+			for _, _unit_name in pairs(_table) do
+				_bool_list[_unit_name] = true
+			end
+		end
+		for _, _table in pairs(_char_map) do
+			if _table.path and _table.list then
+				for _, _unit_name in pairs(_table.list) do
+					local _full_unit_name = _table.path .. _unit_name .. "/" .. _unit_name
+					if not _bool_list[_full_unit_name] then
+						_bool_list[_full_unit_name] = true
+						table.insert(_using_map.all_others, _full_unit_name)
+					end
+				end
+			end
+		end
+	end
+	return _using_map
 end

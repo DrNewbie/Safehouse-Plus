@@ -40,6 +40,7 @@ Hooks:PostHook(MissionManager, "init", "MissionManagerinit_PostHook", function(m
 		end
 		if SafeHousePlus.settings.heavy_loaded == 1 then
 			log("[SafeHousePlus] Heavy Loaded")
+			local _search_in_leveltweak = {}
 			local _jobs_index = tweak_data.narrative._jobs_index or {}
 			for _, v in pairs(_jobs_index) do
 				if tweak_data.narrative.jobs[v] then
@@ -49,10 +50,30 @@ Hooks:PostHook(MissionManager, "init", "MissionManagerinit_PostHook", function(m
 							log("[SafeHousePlus] Loaded Package: " .. _package)
 							PackageManager:load(_package)
 						end
+					else
+						table.insert(_search_in_leveltweak, tostring(v))
 					end
 				end
 			end
-			local _heavy_loaded_patch = {"packages/lvl_mad", "packages/narr_born_1", "packages/lvl_chew", "packages/normal"}
+			for k, v in pairs(_search_in_leveltweak) do
+				if tweak_data.levels[v] then
+					local _package = tweak_data.levels[v].package
+					if _package then
+						if type(_package) == "string" then
+							_package = {_package}
+						end
+						if type(_package) == "table" then
+							for kk, vv in pairs(_package) do
+								if not PackageManager:loaded(vv) then
+									log("[SafeHousePlus] Loaded Package: " .. vv)
+									PackageManager:load(vv)
+								end
+							end
+						end
+					end
+				end
+			end
+			local _heavy_loaded_patch = {"packages/lvl_mad", "packages/narr_born_1", "packages/lvl_chew"}
 			for _, _package in pairs(_heavy_loaded_patch) do
 				if PackageManager:package_exists(_package) and not PackageManager:loaded(_package) then
 					log("[SafeHousePlus] Loaded Package: " .. _package)
