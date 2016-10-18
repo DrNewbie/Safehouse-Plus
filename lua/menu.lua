@@ -21,7 +21,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 	}
 	SafeHousePlus.Difficulty = SafeHousePlus.Difficulty or "normal"
 
-	Hooks:Add("LocalizationManagerPostInit", "SafeHousePlus_loc", function(loc)
+	Hooks:Add("LocalizationManagerPostInit", "SafeHousePlusReal_loc", function(loc)
 		LocalizationManager:add_localized_strings({
 			["safehouseplus_menu_title"] = "SafeHouse Plus",
 			["safehouseplus_menu_desc"] = "",
