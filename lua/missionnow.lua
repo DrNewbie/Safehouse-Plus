@@ -21,7 +21,7 @@ Hooks:PostHook(MissionManager, "init", "MissionManagerinit_PostHook", function(m
 		tweak_data and tweak_data.narrative and tweak_data.levels and PackageManager and
 		PackageManager:loaded("packages/game_base_init") and
 		Global.game_settings and Global.game_settings.level_id == "chill" then
-		if SafeHousePlus.settings.vehicle_loaded == 1 then
+		if SafeHousePlus.settings.vehicle_loaded == 1 or SafeHousePlus.settings.driving_test == 1 then
 			log("[SafeHousePlus] Vehicle Loaded")
 			local _others_package = { "levels/narratives/bain/cage/world/world",
 				"levels/narratives/vlad/shout/world/world",

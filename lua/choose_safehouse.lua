@@ -28,6 +28,9 @@ function MenuManager:open_safehouse_menu()
 	if DW and DW.Hooks then
 		opts[#opts+1] = { text = "Spawn 'DW Plus'", callback_func = callback(self, self, "select_safehouse_adv_menu", {item = 11}) }	
 	end
+	if SafeHousePlus.settings.driving_test == 1 then
+		opts[#opts+1] = { text = "Play 'Practice Driving'", callback_func = callback(self, self, "select_safehouse_menu_driving_test", {}) }
+	end
 	--opts[#opts+1] = { text = "Play 'Quick Shooting'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 101}) }
 	
 	if SafeHousePlus.settings.unit_tool == 1 then
@@ -56,6 +59,16 @@ function mysplit(inputstr, sep)
 		i = i + 1
 	end
 	return t
+end
+
+function MenuManager:select_safehouse_menu_driving_test()
+	local _default = "units/pd2_dlc_shoutout_raid/vehicles/fps_vehicle_muscle_1/fps_vehicle_muscle_1"
+	SafeHousePlus.EnemyType = SafeHousePlus.EnemyType or _default
+	if not tostring(SafeHousePlus.EnemyType):find("vehicles") then
+		SafeHousePlus.EnemyType = _default
+	end
+	SafeHousePlus:spawnsomething(Vector3(-425, 1150, 1050))
+	managers.player:warp_to(Vector3(-85, 1000, 1050), Rotation(0, 0, 0))
 end
 
 function MenuManager:select_safehouse_adv_menu(params)

@@ -17,7 +17,8 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 		nogameover_before_timeup = 0,
 		difficulty = 7,
 		multi_type = 0,
-		corpse_no_gone = 0
+		corpse_no_gone = 0,
+		driving_test = 0
 	}
 	SafeHousePlus.Difficulty = SafeHousePlus.Difficulty or "normal"
 
@@ -45,6 +46,8 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			["safehouseplus_multi_type_menu_desc"] = "Enable spawn different type enemy.",
 			["safehouseplus_corpse_no_gone_menu_title"] = "Don't remove corpse",
 			["safehouseplus_corpse_no_gone_menu_desc"] = "Enable = Don't remove corpse",
+			["safehouseplus_driving_test_menu_title"] = "Practice Driving",
+			["safehouseplus_driving_test_menu_desc"] = "Allow you to practice driving",
 		})
 	end)
 
@@ -59,7 +62,8 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			nogameover_before_timeout = 0,
 			difficulty = 7,
 			multi_type = 0,
-			corpse_no_gone = 0
+			corpse_no_gone = 0,
+			driving_test = 0
 		}
 		self:Save()
 	end
@@ -150,6 +154,23 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			title = "safehouseplus_corpse_no_gone_menu_title",
 			desc = "safehouseplus_corpse_no_gone_menu_desc",
 			callback = "set_safehouseplus_corpse_no_gone_toggle_callback",
+			value = _bool,
+			menu_id = SafeHousePlus.options_menu,
+		})
+		MenuCallbackHandler.set_safehouseplus_driving_test_toggle_callback = function(self, item)
+			if tostring(item:value()) == "on" then
+				SafeHousePlus.settings.driving_test = 1
+			else
+				SafeHousePlus.settings.driving_test = 0
+			end
+			SafeHousePlus:Save()
+		end
+		_bool = SafeHousePlus.settings.driving_test == 1 and true or false
+		MenuHelper:AddToggle({
+			id = "set_safehouseplus_driving_test_toggle_callback",
+			title = "safehouseplus_driving_test_menu_title",
+			desc = "safehouseplus_driving_test_menu_desc",
+			callback = "set_safehouseplus_driving_test_toggle_callback",
 			value = _bool,
 			menu_id = SafeHousePlus.options_menu,
 		})

@@ -216,7 +216,9 @@ end
 function SafeHousePlus:spawnsomething(_pos, _dead_unit)
 	_dead_unit = _dead_unit or nil
 	local pos = SafeHousePlus.Spawn_Location.Human.pos
-	if _pos then pos = _pos end
+	if _pos then
+		pos = _pos
+	end
 	if SafeHousePlus.settings.multi_type == 1 then
 		local _multi = 0
 		for k, v in pairs(SafeHousePlus.EnemyType_Multi) do
@@ -254,7 +256,10 @@ function SafeHousePlus:spawnsomething(_pos, _dead_unit)
 	end	
 	if _is_vehicle then
 		pos = SafeHousePlus.Spawn_Location.Vehicles.pos
-	end	
+		if _pos then
+			pos = _pos
+		end
+	end
 	if not _is_vehicle and not _spawn:find("characters") then
 		log("[SafeHousePlus] Error, spawnsomething, _spawn: " .. tostring(_spawn))
 	end
@@ -369,6 +374,100 @@ function SafeHousePlus:DoInit()
 			end
 			if SafeHousePlus.settings.nogameover_before_timeup == 1 then
 				SafeHousePlus:Spawn_One_AI({alone = 1})
+			end
+			if SafeHousePlus.settings.driving_test == 1 then
+				dofile(SafeHousePlus.ModPath .. "lua/overrides/VehicleManager_all_players_in_vehicles.lua")
+				local _driving_test_pos = {
+					{pos = Vector3(-745, 1160, 1000)},
+					{pos = Vector3(-745, 1460, 1000)},
+					{pos = Vector3(-745, 1760, 1000)},
+					{pos = Vector3(-745, 2060, 1000)},
+					{pos = Vector3(-745, 2360, 1000)},
+					{pos = Vector3(-745, 2660, 1000)},
+					{pos = Vector3(-745, 2960, 1000)},
+					{pos = Vector3(-745, 3260, 1000)},
+					{pos = Vector3(-745, 3560, 1000)},
+					{pos = Vector3(-745, 3860, 1000)},
+					{pos = Vector3(0, 1160, 1000)},
+					{pos = Vector3(0, 1460, 1000)},
+					{pos = Vector3(0, 1760, 1000)},
+					{pos = Vector3(0, 2060, 1000)},
+					{pos = Vector3(0, 2360, 1000)},
+					{pos = Vector3(0, 2660, 1000)},
+					{pos = Vector3(0, 2960, 1000)},
+					{pos = Vector3(0, 3260, 1000)},
+					{pos = Vector3(0, 3560, 1000)},
+					{pos = Vector3(0, 3860, 1000)},
+					{pos = Vector3(-1490, 1160, 1000)},
+					{pos = Vector3(-1490, 1460, 1000)},
+					{pos = Vector3(-1490, 1760, 1000)},
+					{pos = Vector3(-1490, 2060, 1000)},
+					{pos = Vector3(-1490, 2360, 1000)},
+					{pos = Vector3(-1490, 2660, 1000)},
+					{pos = Vector3(-1490, 2960, 1000)},
+					{pos = Vector3(-1490, 3260, 1000)},
+					{pos = Vector3(-1490, 3560, 1000)},
+					{pos = Vector3(-1490, 3860, 1000)},
+					{pos = Vector3(-2235, 1160, 1000)},
+					{pos = Vector3(-2235, 1460, 1000)},
+					{pos = Vector3(-2235, 1760, 1000)},
+					{pos = Vector3(-2235, 2060, 1000)},
+					{pos = Vector3(-2235, 2360, 1000)},
+					{pos = Vector3(-2235, 2660, 1000)},
+					{pos = Vector3(-2235, 2960, 1000)},
+					{pos = Vector3(-2235, 3260, 1000)},
+					{pos = Vector3(-2235, 3560, 1000)},
+					{pos = Vector3(-2235, 3860, 1000)},
+					{pos = Vector3(-2235, 860, 1000)},
+					{pos = Vector3(-2235, 560, 1000)},
+					{pos = Vector3(-2235, 260, 1000)},
+					{pos = Vector3(-2235, -40, 1000)},
+					{pos = Vector3(-2235, -340, 1000)},
+					{pos = Vector3(-2235, -640, 1000)},
+					{pos = Vector3(-2235, -940, 1000)},
+					{pos = Vector3(-2235, -1240, 1000)},
+					{pos = Vector3(-1490, -1240, 1000)},
+					{pos = Vector3(-745, -1240, 1000)},
+					{pos = Vector3(0, -1240, 1000)},
+					{pos = Vector3(745, -1240, 1000), rot = Rotation(0, 90, -20)},
+					{pos = Vector3(1445, -1240, 1255), rot = Rotation(0, 90, -20)},
+					{pos = Vector3(2145, -1240, 1510), rot = Rotation(0, 90, -20)},
+					{pos = Vector3(2845, -1240, 1765), rot = Rotation(0, 90, -20)},
+					{pos = Vector3(3545, -1240, 2020), rot = Rotation(0, 90, -20)},
+					{pos = Vector3(4245, -1240, 2275)},
+					{pos = Vector3(4245, -940, 2275)},
+					{pos = Vector3(4245, -640, 2275)},
+					{pos = Vector3(4245, -340, 2275)},
+					{pos = Vector3(4245, -40, 2275)},
+					{pos = Vector3(4245, 260, 2275)},
+					{pos = Vector3(4245, 560, 2275)},
+					{pos = Vector3(4245, 860, 2275)},
+					{pos = Vector3(4245, 1160, 2275)},
+					{pos = Vector3(4245, 1460, 2275)},
+					{pos = Vector3(4245, 1760, 2275)},
+					{pos = Vector3(745, 1760, 1000), rot = Rotation(0, 90, -20)},
+					{pos = Vector3(1445, 1760, 1255), rot = Rotation(0, 90, -20)},
+					{pos = Vector3(2145, 1760, 1510), rot = Rotation(0, 90, -20)},
+					{pos = Vector3(2845, 1760, 1765), rot = Rotation(0, 90, -20)},
+					{pos = Vector3(3545, 1760, 2020), rot = Rotation(0, 90, -20)},
+					{pos = Vector3(4245, 2060, 2275)},
+					{pos = Vector3(4245, 2360, 2275)},
+					{pos = Vector3(4245, 2660, 2275)},
+					{pos = Vector3(4245, 2960, 2275)},
+					{pos = Vector3(4245, 3260, 2275)},
+					{pos = Vector3(4245, 3560, 2275)},
+					{pos = Vector3(4245, 3860, 2275)},
+					{pos = Vector3(4245, 4160, 2275)},
+					{pos = Vector3(4245, 4460, 2275)},
+					{pos = Vector3(3545, 4460, 2020), rot = Rotation(0, 90, -20)},
+				}
+				local _driving_test_unit_name = Idstring("units/payday2/props/air_prop_runway_fence/air_prop_runway_fence_gate_v3")
+				for _, v in pairs(_driving_test_pos) do
+					_u = safe_spawn_unit(_driving_test_unit_name, v.pos, v.rot or Rotation(0, 90, 0))
+					if _u and alive(_u) and _u:interaction() then
+						_u:interaction():set_active(false, false)
+					end
+				end
 			end
 			log("[SafeHousePlus] DoInit")
 		end
