@@ -27,7 +27,7 @@ Allow you to spawn loot thing
 http://imgur.com/a/dmgHQ
 
 ###Heavy Loaded
-Allow you to spwan others enemy, you need to have good enough PC or you will crash.
+Allow you to spwan others enemy, require good enough PC or you will crash.
 
 ###Customize your Safehouse 
 http://steamcommunity.com/sharedfiles/filedetails/?id=636882511
