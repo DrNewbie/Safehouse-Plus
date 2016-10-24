@@ -372,9 +372,6 @@ function SafeHousePlus:DoInit()
 					end
 				end  
 			end
-			if SafeHousePlus.settings.nogameover_before_timeup == 1 then
-				SafeHousePlus:Spawn_One_AI({alone = 1})
-			end
 			if SafeHousePlus.settings.enable_self_damage == 1 then
 				dofile(SafeHousePlus.ModPath .. "lua/overrides/ElementModifyPlayer_on_executed.lua")
 			end
