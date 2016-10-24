@@ -375,6 +375,9 @@ function SafeHousePlus:DoInit()
 			if SafeHousePlus.settings.nogameover_before_timeup == 1 then
 				SafeHousePlus:Spawn_One_AI({alone = 1})
 			end
+			if SafeHousePlus.settings.enable_self_damage == 1 then
+				dofile(SafeHousePlus.ModPath .. "lua/overrides/ElementModifyPlayer_on_executed.lua")
+			end
 			if SafeHousePlus.settings.driving_test == 1 then
 				dofile(SafeHousePlus.ModPath .. "lua/overrides/VehicleManager_all_players_in_vehicles.lua")
 				local _driving_test_pos = {

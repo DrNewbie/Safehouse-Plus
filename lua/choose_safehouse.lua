@@ -31,6 +31,9 @@ function MenuManager:open_safehouse_menu()
 	if SafeHousePlus.settings.driving_test == 1 then
 		opts[#opts+1] = { text = "Play 'Practice Driving'", callback_func = callback(self, self, "select_safehouse_menu_driving_test", {}) }
 	end
+	if SafeHousePlus.settings.enable_self_damage == 1 then
+		opts[#opts+1] = { text = "Use 'Hurt Me'", callback_func = callback(self, self, "select_safehouse_menu_hurtme", {}) }
+	end
 	--opts[#opts+1] = { text = "Play 'Quick Shooting'", callback_func = callback(self, self, "select_safehouse_menu_spawn", {item = 101}) }
 	
 	if SafeHousePlus.settings.unit_tool == 1 then
@@ -59,6 +62,12 @@ function mysplit(inputstr, sep)
 		i = i + 1
 	end
 	return t
+end
+
+function MenuManager:select_safehouse_menu_hurtme()
+	local player_unit = managers.player:player_unit()
+	local _pos = player_unit:position() + Vector3(0, 0, 50)
+	ProjectileBase.throw_projectile(tweak_data.blackmarket:get_index_from_projectile_id("molotov"), _pos, Vector3(0, 0, -1), 1)
 end
 
 function MenuManager:select_safehouse_menu_driving_test()

@@ -18,7 +18,8 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 		difficulty = 7,
 		multi_type = 0,
 		corpse_no_gone = 0,
-		driving_test = 0
+		driving_test = 0,
+		enable_self_damage = 0
 	}
 	SafeHousePlus.Difficulty = SafeHousePlus.Difficulty or "normal"
 
@@ -48,6 +49,8 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			["safehouseplus_corpse_no_gone_menu_desc"] = "Enable = Don't remove corpse",
 			["safehouseplus_driving_test_menu_title"] = "Practice Driving",
 			["safehouseplus_driving_test_menu_desc"] = "Allow you to practice driving",
+			["safehouseplus_enable_self_damage_menu_title"] = "Hurt Myself",
+			["safehouseplus_enable_self_damage_menu_desc"] = "Boom",
 		})
 	end)
 
@@ -63,7 +66,8 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			difficulty = 7,
 			multi_type = 0,
 			corpse_no_gone = 0,
-			driving_test = 0
+			driving_test = 0,
+			enable_self_damage = 0
 		}
 		self:Save()
 	end
@@ -137,6 +141,23 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 			title = "safehouseplus_vehicle_loaded_menu_title",
 			desc = "safehouseplus_vehicle_loaded_menu_desc",
 			callback = "set_safehouseplus_vehicle_loaded_toggle_callback",
+			value = _bool,
+			menu_id = SafeHousePlus.options_menu,
+		})
+		MenuCallbackHandler.set_safehouseplus_enable_self_damage_toggle_callback = function(self, item)
+			if tostring(item:value()) == "on" then
+				SafeHousePlus.settings.enable_self_damage = 1
+			else
+				SafeHousePlus.settings.enable_self_damage = 0
+			end
+			SafeHousePlus:Save()
+		end
+		_bool = SafeHousePlus.settings.enable_self_damage == 1 and true or false
+		MenuHelper:AddToggle({
+			id = "set_safehouseplus_enable_self_damage_toggle_callback",
+			title = "safehouseplus_enable_self_damage_menu_title",
+			desc = "safehouseplus_enable_self_damage_menu_desc",
+			callback = "set_safehouseplus_enable_self_damage_toggle_callback",
 			value = _bool,
 			menu_id = SafeHousePlus.options_menu,
 		})
