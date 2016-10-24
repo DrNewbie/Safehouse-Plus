@@ -18,6 +18,9 @@ Spawn Multi-Type enemy at the same time
 
 http://imgur.com/a/OTaMb
 
+###Hurt Me
+https://gfycat.com/SickImaginativeJaeger
+
 ###Don't remove corpse
 http://imgur.com/a/w61Pb
 
