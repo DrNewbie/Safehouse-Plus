@@ -17,8 +17,6 @@ Hooks:PostHook(MissionManager, "init", "MissionManagerinit_PostHook", function(m
 	SafeHousePlus.Heavy_Loaded = false
 	SafeHousePlus.Loot_Loaded = false
 	
-	tweak_data.medic.cooldown = 0.01
-	
 	if SafeHousePlus and SafeHousePlus.settings and 
 		tweak_data and tweak_data.narrative and tweak_data.levels and PackageManager and
 		PackageManager:loaded("packages/game_base_init") and
