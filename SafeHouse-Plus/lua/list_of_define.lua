@@ -36,6 +36,8 @@ function SafeHousePlus:AllHumanUnits()
 			"units/payday2/characters/ene_bulldozer_1/ene_bulldozer_1",
 			"units/payday2/characters/ene_bulldozer_2/ene_bulldozer_2",
 			"units/payday2/characters/ene_bulldozer_3/ene_bulldozer_3",
+			"units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic",
+			"units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun",
 			"units/payday2/characters/ene_shield_1/ene_shield_1",
 			"units/payday2/characters/ene_shield_2/ene_shield_2",
 			"units/payday2/characters/ene_sniper_1/ene_sniper_1",
