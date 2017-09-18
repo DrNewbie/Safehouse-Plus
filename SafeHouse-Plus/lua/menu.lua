@@ -4,7 +4,6 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 
 	SafeHousePlus.ModPath = ModPath
 	SafeHousePlus.SaveFile = SafeHousePlus.SaveFile or SavePath .. "SafeHousePlus.txt"
-	SafeHousePlus.ModOptions = SafeHousePlus.ModPath .. "menus/modoptions.txt"
 	SafeHousePlus.settings = SafeHousePlus.settings or {}
 	SafeHousePlus.options_menu = "SafeHousePlus_menu"
 	SafeHousePlus.settings = {
@@ -22,6 +21,10 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 		enable_self_damage = 0
 	}
 	SafeHousePlus.Difficulty = SafeHousePlus.Difficulty or "normal"
+	
+	if ModCore then
+	ModCore:new(SafeHousePlus.ModPath .. "Config.xml", false, true):init_modules()
+end
 
 	Hooks:Add("LocalizationManagerPostInit", "SafeHousePlusReal_loc", function(loc)
 		LocalizationManager:add_localized_strings({
@@ -318,7 +321,7 @@ _G.SafeHousePlus = _G.SafeHousePlus or {}
 
 	Hooks:Add("MenuManagerBuildCustomMenus", "SafeHousePlusOptions", function(menu_manager, nodes)
 		nodes[SafeHousePlus.options_menu] = MenuHelper:BuildMenu( SafeHousePlus.options_menu )
-		MenuHelper:AddMenuItem( MenuHelper.menus.lua_mod_options_menu, SafeHousePlus.options_menu, "safehouseplus_menu_title", "safehouseplus_menu_desc")
+		MenuHelper:AddMenuItem(nodes["blt_options"], SafeHousePlus.options_menu, "safehouseplus_menu_title", "safehouseplus_menu_desc")
 	end)
 	
 Hooks:Add("MenuManagerSetupCustomMenus", "MenuManagerSetupCustomMenus_SafeHouse", function(menu_manager, nodes)
@@ -346,7 +349,7 @@ end)
 Hooks:Add("MenuManagerBuildCustomMenus", "MenuManagerBuildCustomMenus_SafeHouse", function(menu_manager, nodes)
 	if nodes.lobby then
 		nodes[menu_id] = MenuHelper:BuildMenu( menu_id )
-		MenuHelper:AddMenuItem( nodes.lobby, menu_id, "menu_safehouse_contract_name", "menu_safehouse_contract_desc" )
+		MenuHelper:AddMenuItem(nodes.lobby, menu_id, "menu_safehouse_contract_name", "menu_safehouse_contract_desc" )
 	end
 end)
 
